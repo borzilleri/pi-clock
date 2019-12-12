@@ -1,0 +1,25 @@
+{
+  "name": "pi-clock",
+  "version": "1.0.0",
+  "description": "Raspberry Pi Alarm Clock",
+  "type": "module",
+  "scripts": {
+    "start": "node index.mjs",
+    "watch": "nodemon index.mjs"
+  },
+  "author": "Jonathan Borzilleri <jonathan@borzilleri.net>",
+  "license": "MIT",
+  "_moduleAliases": {
+    "$src": "./src"
+  },
+  "dependencies": {
+    "better-module-alias": "^1.0.4",
+    "cron": "^1.7.2",
+    "play-sound": "^1.1.3",
+    "restify": "^8.4.1",
+    "toml": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+}
