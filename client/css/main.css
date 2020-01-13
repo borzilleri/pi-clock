@@ -1,0 +1,46 @@
+@font-face {
+	font-family: 'DSEG7Classic';
+	src: 
+		url('/font/DSEG7Classic-Regular.woff') format('woff'),
+		url('/font/DSEG7Classic-Regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: black;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+
+	flex-direction: col;
+}
+
+#status {
+	flex: none;
+	width: 100%;
+	font-size: 12vw;
+	text-align: center;
+	font-family: Helvetica, sans-serif;
+	color: green;
+}
+
+#clock {
+	width: 100%;
+	margin-left: -5vw;
+	font-size: 25vw;
+	text-align: right;
+	font-family: 'DSEG7Classic';
+	color: orangered;
+}
+
+#alarm {
+	flex: none;
+	width: 100%;
+	font-size: 8vw;
+	text-align: center;
+	font-family: Helvetica, sans-serif;
+	color: orange;
+}

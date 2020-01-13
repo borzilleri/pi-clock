@@ -1,35 +1,36 @@
+import * as AlarmManager from './AlarmManager.mjs';
+import express from 'express';
 
-
-function nyi(req, res, next) {
-	res.send('not yet implemented');
-}
-
-function alarm_set(req, res, next) {
+let alarmApi = express.Router();
+alarmApi.use(function timeLog(req, res, next) {
+	console.log(`${req.method} : ${req.url}`);
 	next();
-}
+});
+alarmApi.get('/current', (req, res, next) => {
 
-function alarm_snooze(req, res, next) {
-	res.send(204);
+})
+alarmApi.put('/current/off', (req, res, next) => {
+	let active = AlarmManager.getActive();
+	if( active ) {
+		active.deactivate();
+	}
+	res.sendStatus(204);
 	next();
-}
-
-function alarm_off(req, res, next) {
-	AlarmManager.Stop();
-	res.send(204);
+});
+alarmApi.post('/current/snooze', (req, res, next) => {
+	let active = AlarmManager.getActive();
+	if( active ) {
+		active.snooze();
+	}
+	res.sendStatus(204);
 	next();
-}
+});
 
-function debug_trigger_alarm(req, res, next) {
-	AlarmManager.Start();
+let debugApi = express.Router();
+debugApi.post('/debug/trigger', (req, res, next) => {
 	res.send(201);
 	next();
-}
+});
 
-export const NYI = nyi;
-export const Alarm = {
-	Snooze: alarm_snooze,
-	Off: alarm_off
-};
-export const Debug = {
-	Trigger: debug_trigger_alarm
-};
+
+export { alarmApi, debugApi }

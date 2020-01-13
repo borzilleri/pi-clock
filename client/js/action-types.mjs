@@ -1,0 +1,4 @@
+export const DEBUG_REQUEST = 'DEBUG_REQUEST';
+export const DEBUG_RESPONSE = 'DEBUG_RESPONSE';
+
+export const ALARM_FETCHED = 'ALARM_FETCHED';

@@ -36,7 +36,7 @@ function Play(soundName) {
 
 function Stop() {
 	if (ACTIVE) {
-		console.log("Stopping current alarm.");
+		console.log("Stopping curent playback.");
 		ACTIVE.kill();
 	}
 	else {

@@ -1,5 +1,22 @@
+[alarm]
+	# Default: 540s (9 minutes)
+	snooze_time = 30
 [server]
 	port = 3000
 [store]
 	alarms = "./data/alarms.json"
 	sounds = "./data/sounds"
+
+[vendor]
+	io-d47abd80_js = "redux-saga/dist/io-d47abd80.js"
+	io-f9ca3938_js = "redux-saga/dist/io-f9ca3938.js"
+	react_js = "react/umd/react.development.js"
+	react-dom_js = "react-dom/umd/react-dom.development.js"
+	redux_js = "redux/dist/redux.js"
+	react-redux_js = "react-redux/dist/react-redux.js"
+	redux-saga_js = "redux-saga/dist/redux-saga-core.esmodules-browsers.js"
+	redux-saga-effects_js = "redux-saga/dist/redux-saga-effects.esmodules-browsers.js"
+	moment_js = "moment/moment.js"
+	htm_mjs = "htm/dist/htm.mjs"
+	htm-react_mjs = "htm/react/index.mjs"
+	socket_io_js = "socket.io-client/dist/socket.io.js"
