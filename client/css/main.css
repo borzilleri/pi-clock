@@ -27,6 +27,32 @@ body {
 	color: green;
 }
 
+.disabled {
+	visibility: hidden;
+}
+
+.status-active-container {
+	display: flex;
+}
+
+.snooze-button {
+	flex-grow: 2;
+	background: green;
+	color: black;
+	text-decoration: none;
+}
+
+.stop-button {
+	flex-grow: 1;
+	background-color: darkred;
+	color: black;
+	text-decoration: none;
+}
+
+.status-snoozing-container {
+	color: green;
+}
+
 #clock {
 	width: 100%;
 	margin-left: -5vw;

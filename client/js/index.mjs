@@ -1,5 +1,6 @@
 import store from "./store.mjs";
 import Clock from "./components/clock.mjs";
+import Status from "./components/status.mjs";
 import html from "./render-html.mjs";
 
 window.store = store;
@@ -7,8 +8,8 @@ window.store = store;
 const Provider = ReactRedux.Provider;
 const render = ReactDOM.render;
 render(html`
-  <${Provider} store=${store}>
-		<div id="status">Test</div>
+	<${Provider} store=${store}>
+		<${Status} />
     <${Clock} />
 		<div id="alarm">
 			<span id="alarm-label">Alarm: </span>
