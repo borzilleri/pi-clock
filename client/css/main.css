@@ -24,10 +24,10 @@ body {
 	font-size: 12vw;
 	text-align: center;
 	font-family: Helvetica, sans-serif;
-	color: green;
 }
 
-.disabled {
+.status-inactive-container {
+	display: flex;
 	visibility: hidden;
 }
 

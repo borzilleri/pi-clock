@@ -1,57 +1,33 @@
 import html from "../render-html.mjs";
+import { STATUS_INACTIVE, STATUS_ACTIVE, STATUS_SNOOZING } from "../constants.mjs";
+import ActiveAlarm from "./alarm-active.mjs";
+import SnoozingAlarm from "./alarm-snoozing.mjs";
+import InactiveAlarm from "./alarm-inactive.mjs";
 
-
-class SnoozeButton extends React.Component {
-	handleClick(e) {
-		e.preventDefault();
-		console.log("snooze clicked");
-	}
-	render() {
-		return html`<a 
-			onClick=${this.handleClick}
-			href="#" className="snooze-button">Snooze</a>`;
+const mapStateToProps = (state) => {
+	return {
+		alarmStatus: state.currentStatus
 	}
 }
 
-class StopAlarmButton extends React.Component {
-	handleClick(e) {
-		e.preventDefault();
-		console.log("stop clicked");
+class ConnectedStatus extends React.Component {
+	getComponent() {
+		switch(STATUS_INACTIVE) {
+			case STATUS_INACTIVE:
+				return InactiveAlarm;
+			case STATUS_ACTIVE:
+				return ActiveAlarm;
+			case STATUS_SNOOZING:
+				return SnoozingAlarm;
+		}
 	}
-	render() {
-		return html`<a
-			onClick=${this.handleClick}
-			href="#"  className="stop-button">Stop</a>`;
-	}
-}
-
-class ActiveAlarm extends React.Component {
 	render() {
 		return html`
-			<div className="status-active-container">
-				<${SnoozeButton}/>
-				<${StopAlarmButton} />
-			</div>
+		<div id="status"><${this.getComponent()} /></div>
 		`;
 	}
 }
 
-class SnoozingAlarm extends React.Component {
-	render() {
-		return html`
-			<div className="status-snoozing-container">
-				<span className="snoozing">Snoozing</span>
-			</div>
-		`;
-	}
-}
+const Status = ReactRedux.connect(mapStateToProps)(ConnectedStatus);
 
-class Status extends React.Component {
-	render() {
-		
-		return html`
-		<div id="status"><${ActiveAlarm} /></div>
-		`;
-	}
-}
 export default Status;
