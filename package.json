@@ -4,8 +4,8 @@
   "description": "Raspberry Pi Alarm Clock",
   "type": "module",
   "scripts": {
-    "start": "node index.mjs",
-    "watch": "nodemon index.mjs"
+    "start": "node index.js",
+    "watch": "nodemon index.js"
   },
   "author": "Jonathan Borzilleri <jonathan@borzilleri.net>",
   "license": "MIT",
@@ -13,10 +13,14 @@
     "$src": "./src"
   },
   "dependencies": {
+    "@awaitjs/express": "^0.4.0",
+    "camo": "^0.12.3",
     "cron": "^1.7.2",
     "express": "^4.17.1",
+    "express-validator": "^6.3.1",
     "htm": "^2.2.1",
     "moment": "^2.24.0",
+    "nedb": "^1.8.0",
     "play-sound": "^1.1.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

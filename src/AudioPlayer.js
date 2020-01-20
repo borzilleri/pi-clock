@@ -1,6 +1,6 @@
 import { promises as fsp, Stats } from 'fs'
 import PlaySound from 'play-sound';
-import config from './config.mjs';
+import config from './config.js';
 let player = PlaySound({})
 
 let ACTIVE = null;

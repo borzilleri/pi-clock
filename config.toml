@@ -4,7 +4,8 @@
 [server]
 	port = 3000
 [store]
-	alarms = "./data/alarms.json"
+	alarm_uri = "nedb:////Users/jonathan/Projects/pi-clock/data/piclock.db"
+	alarms = "./data/alarms.db"
 	sounds = "./data/sounds"
 
 [vendor]

@@ -1,4 +1,4 @@
-import html from "../render-html.mjs";
+import html from "../render-html.js";
 
 class Clock extends React.Component {
 	constructor(props) {

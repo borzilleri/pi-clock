@@ -1,7 +1,6 @@
-import {eventChannel} from '/vendor/redux-saga.js';
-import {actionChannel, all, take, call, put} from "/vendor/redux-saga-effects.js"
-
-import {DEBUG_REQUEST, DEBUG_RESPONSE} from './action-types.mjs';
+import { eventChannel } from '/vendor/redux-saga.js';
+import { actionChannel, all, take, call, put } from "/vendor/redux-saga-effects.js"
+import * as ActionTypes from '/shared/action-types.js';
 
 const wssUrl = "http://localhost:3000"
 let socket;
@@ -29,21 +28,25 @@ function* serverListenerSaga() {
 	const socketChannel = yield call(createSocketChannel, socket);
 	while (true) {
 		const action = yield take(socketChannel);
+		console.log("received server msg", action);
 		yield put(action)
 	}
 }
 
+/**
+ * Listens to events from the clients, and sends them to the server.
+ */
 function* clientListenerSaga() {
-	const requestChannel = yield actionChannel(DEBUG_REQUEST);
-	while(true) {
-		const {payload} = yield take(requestChannel);
+	const requestChannel = yield actionChannel(ActionTypes.DEBUG_REQUEST);
+	while (true) {
+		const { payload } = yield take(requestChannel);
 		yield call(handleRequest, payload);
 	}
 }
 
 function* handleRequest(payload) {
-	console.log(`handling request: ${payload}`);
-	socket.send({type: 'DEBUG_REQUEST', payload});
+	console.log('"handleRequest" payload received', payload);
+	socket.send({ type: 'DEBUG_REQUEST', payload });
 }
 
 export default function* saga() {

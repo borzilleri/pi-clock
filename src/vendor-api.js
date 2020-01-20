@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import config from './config.mjs';
+import config from './config.js';
 
 const NODE_MODULES_ROOT = path.resolve('node_modules')
 let vendorApi = express.Router();
