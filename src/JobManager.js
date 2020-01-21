@@ -1,7 +1,7 @@
 import moment from "moment";
 import Alarm from "./Alarm.js";
 import Job from "./Job.js";
-import AudioPlayer from "./AudioPlayer.js";
+import * as AudioPlayer from "./AudioPlayer.js";
 import config from "./config.js";
 import * as Constants from "../shared/constants.js";
 import * as ActionTypes from "../shared/action-types.js";
@@ -31,7 +31,7 @@ function jobComparator(reverse) {
 function activationHandler(job) {
 	console.log(`Activating Alarm: ${job.id}`);
 	ACTIVE = job;
-	AudioPlayer.Play(job.alarm.sound);
+	AudioPlayer.PlayAudio(job.alarm.sound);
 	dispatchCurrentState();
 }
 
@@ -40,7 +40,7 @@ function completionHanlder(job) {
 }
 
 function stopActive() {
-	AudioPlayer.Stop();
+	AudioPlayer.StopAudio();
 	ACTIVE = null;
 	if (SNOOZE_TIMEOUT_ID) {
 		clearTimeout(SNOOZE_TIMEOUT_ID);
@@ -50,7 +50,7 @@ function stopActive() {
 
 function snoozeActive() {
 	// We probably just want to do this regardless of whether there's an active alarm.
-	AudioPlayer.Stop();
+	AudioPlayer.StopAudio();
 	if (ACTIVE) {
 		ACTIVE.snoozingUntil = moment().add(SNOOZE_DURATION, 'Seconds');
 		dispatchCurrentState();
@@ -59,7 +59,6 @@ function snoozeActive() {
 }
 
 function dispatchCurrentState() {
-	console.log("dispatching current state?");
 	Events.emit(ActionTypes.SET_STATE, getState());
 }
 
@@ -75,7 +74,7 @@ function getState() {
 	if (ACTIVE) {
 		// There's an active (possibly snoozing) alarm.
 		state.name = ACTIVE.name;
-		if (ACTIVE.isSnoozing()) {
+		if (ACTIVE.isSnoozing) {
 			state.status = Constants.STATUS_SNOOZING;
 			state.activationTime = ACTIVE.snoozingUntil;
 		}
@@ -122,6 +121,7 @@ async function loadAllJobs() {
 	await Alarm.find().then(list => {
 		JOBS = list.filter(a => a.enabled).map(alarm => new Job(alarm)).sort(jobComparator(true));
 	})
+	console.log(`Loaded ${JOBS.length} jobs.`)
 	dispatchCurrentState();
 }
 

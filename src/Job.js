@@ -9,11 +9,7 @@ class Job {
 
 	constructor(alarm) {
 		this.alarm = alarm;
-		this.cron = this.initCron(alarm);
-	}
-
-	initCron(alarm) {
-		return cron.job(
+		this.cron = cron.job(
 			alarm.cronSchedule,
 			this.onTick,
 			this.onComplete,
@@ -50,6 +46,7 @@ class Job {
 		if (this.alarm.cronSchedule !== alarm.cronSchedule) {
 			console.log(`Updating time for job: ${this.id}`)
 			this.cron.setTime(cron.time(alarm.cronSchedule));
+			this.cron.start();
 		}
 		this.alarm = alarm;
 	}

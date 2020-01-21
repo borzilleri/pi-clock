@@ -11,27 +11,11 @@ const mapStateToProps = (state) => {
 	}
 }
 
-import {sendDebugMessage} from "/shared/actions.js";
-const mapDispatchToProps = (dispatch) => {
-	return {
-		debug: message => dispatch(sendDebugMessage(message))
-	};
-}
-
 class InactiveAlarm extends React.Component {
-	constructor(props) {
-		super(props);
-		this.handleClick = this.handleClick.bind(this);
-	}
-	handleClick(e) {
-		this.props.debug("clicked!")
-	}
 	render() {
-		return html`<div onClick=${this.handleClick} className="alarm-inactive">No Alarms</div>`;
+		return html`<div className="alarm-inactive">No Alarms</div>`;
 	}
 }
-
-let cInactiveAlarm = ReactRedux.connect(null, mapDispatchToProps)(InactiveAlarm);
 
 class ConnectedAlarm extends React.Component {
 	getComponent() {
@@ -43,7 +27,7 @@ class ConnectedAlarm extends React.Component {
 			case STATUS_ACTIVE:
 				return ActiveAlarm;
 			default:
-				return cInactiveAlarm;
+				return InactiveAlarm;
 		}
 	}
 	render() {
@@ -55,6 +39,6 @@ class ConnectedAlarm extends React.Component {
 	}
 }
 
-const Alarm = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(ConnectedAlarm);
+const Alarm = ReactRedux.connect(mapStateToProps)(ConnectedAlarm);
 
 export default Alarm;

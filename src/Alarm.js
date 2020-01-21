@@ -37,6 +37,6 @@ export default class Alarm extends camo.Document {
 	}
 
 	get cronSchedule() {
-		return `0 ${this.minute} ${this.hour} * * ${this.weekDay}`;
+		return `0 ${this.minute} ${this.hour} * * ${this.weekDay.join(',')}`;
 	}
 }

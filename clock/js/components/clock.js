@@ -1,10 +1,12 @@
 import html from "../render-html.js";
 
+let clockFormat= 'HH:mm';
+
 class Clock extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			time: moment().format('hh:mm')
+			time: moment().format(clockFormat)
 		}
 	}
 	componentDidMount() {
@@ -15,7 +17,7 @@ class Clock extends React.Component {
 	}
 	tick() {
 		this.setState({
-			time: moment().format('hh:mm')
+			time: moment().format(clockFormat)
 		});
 	}
 	render() {

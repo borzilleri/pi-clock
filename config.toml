@@ -5,8 +5,21 @@
 	port = 3000
 [store]
 	alarm_uri = "nedb:////Users/jonathan/Projects/pi-clock/data/piclock.db"
-	alarms = "./data/alarms.db"
-	sounds = "./data/sounds"
+	sound_files = "./data/sounds"
+
+[audio]
+	player = 'afplay'
+	extensions = ['.mp3', '.wav']
+	players = [
+		'mplayer',
+		'afplay',
+		'mpg123',
+		'mpg321',
+		'play',
+		'omxplayer',
+		'aplay',
+		'cmdmp3'
+	]
 
 [vendor]
 	io-d47abd80_js = "redux-saga/dist/io-d47abd80.js"
