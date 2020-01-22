@@ -1,15 +1,14 @@
-[alarm]
-	# Default: 540s (9 minutes)
-	snooze_time = 30
 [server]
 	port = 3000
+
 [store]
-	alarm_uri = "nedb:////Users/jonathan/Projects/pi-clock/data/piclock.db"
-	sound_files = "./data/sounds"
+	db_uri = "nedb:////Users/jonathan/Projects/pi-clock/data/piclock.db"
+	sounds_dir = "./data/sounds"
 
 [audio]
 	player = 'afplay'
 	extensions = ['.mp3', '.wav']
+# Should this even be a config?
 	players = [
 		'mplayer',
 		'afplay',
@@ -21,6 +20,10 @@
 		'cmdmp3'
 	]
 
+# A kind of hacky whitelist of valid vendor libraries to send to clients.
+# These are files that can be loaded via a `/vendors/some_file` endpoint.
+# The key is the "some_file" path component, while the value is the on-disk path.
+# Underscores are replaced with dots.
 [vendor]
 	io-d47abd80_js = "redux-saga/dist/io-d47abd80.js"
 	io-f9ca3938_js = "redux-saga/dist/io-f9ca3938.js"

@@ -1,24 +1,29 @@
 import html from "../render-html.js";
 
 function formatSnoozeTime(snoozeUntil) {
-	let duration = moment.duration(moment().diff(snoozeUntil))
+	let duration = moment.duration(snoozeUntil.diff(moment()));
 	return `${Math.floor(duration.asMinutes())}m ${duration.seconds()}s`;
 }
 
 // Test Alarm: 9m 10s
 const mapStateToProps = (state) => {
-	let activeOn = moment.unix(state.activationTime);
 	return {
 		name: state.name,
-		snoozeUntil: moment.unix(state.activationTime),
-		snoozeTime: formatSnoozeTime(activeOn)
+		snoozeUntil: moment.unix(state.activationTime)
 	}
 }
 
 
 class ConnectedSnoozingAlarm extends React.Component {
+	constructor(props) {
+		super(props)
+		this.tick = this.tick.bind(this);
+		this.state = {
+			snoozeTime: formatSnoozeTime(this.props.snoozeUntil)
+		}
+	}
 	componentDidMount() {
-		this.intervalId = setInterval(() => this.tick(), 1000);
+		this.intervalId = setInterval(this.tick, 1000);
 	}
 	componentWillUnmount() {
 		clearInterval(this.intervalId);
@@ -32,7 +37,7 @@ class ConnectedSnoozingAlarm extends React.Component {
 		return html`
 		<div className="alarm-snoozing">
 			<span className="alarm-name">${this.props.name}: </span>
-			<span className="alarm-time">${this.props.snoozeTime}</span>
+			<span className="alarm-time">${this.state.snoozeTime}</span>
 		</div>`;
 	}
 }

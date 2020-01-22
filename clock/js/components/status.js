@@ -6,13 +6,13 @@ import InactiveStatus from "./status-inactive.js";
 
 const mapStateToProps = (state) => {
 	return {
-		alarmStatus: state.currentStatus
+		alarmStatus: state.status
 	}
 }
 
 class ConnectedStatus extends React.Component {
 	getComponent() {
-		switch (this.alarmStatus) {
+		switch (this.props.alarmStatus) {
 			case STATUS_ACTIVE:
 				return ActiveStatus;
 			case STATUS_SNOOZING:

@@ -5,7 +5,6 @@ import { ALARM_JOB_ACTIVATED, ALARM_JOB_COMPLETED } from '../shared/action-types
 class Job {
 	cron;
 	alarm;
-	snoozing = -1;
 
 	constructor(alarm) {
 		this.alarm = alarm;
@@ -27,10 +26,6 @@ class Job {
 
 	get nextActivation() {
 		return this.cron.nextDates().unix();
-	}
-
-	get isSnoozing() {
-		return this.snoozing > -1;
 	}
 
 	onTick() {

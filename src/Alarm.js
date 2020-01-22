@@ -1,6 +1,14 @@
 import camo from 'camo';
 
 export default class Alarm extends camo.Document {
+	name;
+	sound;
+	recurring;
+	enabled;
+	hour;
+	minute;
+	weekDay;
+
 	constructor() {
 		super();
 		this.name = {

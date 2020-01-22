@@ -1,0 +1,4 @@
+[alarm]
+	# Default: 540s (9 minutes)
+	snooze_time = 30
+

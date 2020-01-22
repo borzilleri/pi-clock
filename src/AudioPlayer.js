@@ -5,11 +5,12 @@ import findExec from 'find-exec';
 import config from './config.js';
 import path from 'path';
 
+const SOUNDS_DIR = path.resolve(config.store.sounds_dir);
 const PLAYER_EXE = findExec(config.audio.player);
 if (!PLAYER_EXE) {
 	throw new Error(`Unable to find player executable: ${config.audio.player}`)
 }
-let SOUND_FILES = Object.fromEntries(fs.readdirSync(config.store.sound_files, { withFileTypes: true })
+let SOUND_FILES = Object.fromEntries(fs.readdirSync(SOUNDS_DIR, { withFileTypes: true })
 	.filter(f => f.isFile())
 	.filter(f => {
 		let ext = path.extname(f.name);
@@ -18,7 +19,7 @@ let SOUND_FILES = Object.fromEntries(fs.readdirSync(config.store.sound_files, { 
 	})
 	.map(fd => {
 		let f = path.parse(fd.name);
-		return [f.name, path.resolve(config.store.sound_files, fd.name)]
+		return [f.name, path.resolve(SOUNDS_DIR, fd.name)]
 	}));
 
 let currentSound;

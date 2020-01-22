@@ -3,10 +3,14 @@ import { snoozeAlarm, stopAlarm } from '/shared/actions.js';
 
 const snoozeMapDispatchToProps = (dispatch) => {
 	return {
-		snoozeAlarm: dispatch(snoozeAlarm())
+		snoozeAlarm: () => dispatch(snoozeAlarm())
 	}
 }
 class ConnectedSnoozeButton extends React.Component {
+	constructor(props) {
+		super(props);
+		this.handleClick = this.handleClick.bind(this);
+	}
 	handleClick(e) {
 		e.preventDefault();
 		console.log("Snoozing active alarm.");
@@ -22,10 +26,14 @@ const SnoozeButton = ReactRedux.connect(null, snoozeMapDispatchToProps)(Connecte
 
 const stopMapDispatchToProps = (dispatch) => {
 	return {
-		stopAlarm: dispatch(stopAlarm())
+		stopAlarm: () => dispatch(stopAlarm())
 	}
 }
 class ConnectedStopButton extends React.Component {
+	constructor(props) {
+		super(props);
+		this.handleClick = this.handleClick.bind(this);
+	}
 	handleClick(e) {
 		e.preventDefault();
 		console.log("Active alarm stopped.");

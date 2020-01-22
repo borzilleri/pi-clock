@@ -4,8 +4,12 @@ import { SET_STATE, REQUEST_STATE } from "../shared/action-types.js";
 
 function messageHandler(msg) {
 	console.log("Socket message received", msg);
-	//TODO: Parse and emit appropriate message.
-	Events.emit(msg.type, msg.payload);
+	if (msg instanceof Object && msg.hasOwnProperty('type')) {
+		Events.emit(msg.type, msg.payload)
+	}
+	else {
+		console.log("Unsupported message found", msg);
+	}
 }
 
 

@@ -11,7 +11,7 @@ class ConnectedActiveAlarm extends React.Component {
 	render() {
 		return html`
 		<div className="alarm-pending">
-			<span className="alarm-name">${this.props.name}: </span>
+			<span className="alarm-name">${this.props.name}</span>
 		</div>`;
 	}
 }

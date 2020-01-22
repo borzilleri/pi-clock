@@ -8,7 +8,7 @@ import Events from './src/EventBus.js';
 import { DATABASE_LOADED } from './shared/action-types.js';
 
 let database;
-camo.connect(config.store.alarm_uri)
+camo.connect(config.store.db_uri)
 	.then(db => {
 		console.log("Connected to db.");
 		database = db;
@@ -20,11 +20,13 @@ JobManagerInit();
 
 import vendorApi from './src/vendor-api.js';
 import alarmsRouter from './src/AlarmsApi.js';
+import activeRouter from './src/ActiveApi.js';
 
 app.use(express.json());
 app.use('/shared', express.static('shared'));
 app.use('/clock', express.static('clock'));
 app.use('/alarms', alarmsRouter);
+app.use('/active', activeRouter);
 app.use('/vendor', vendorApi);
 app.use((req, res, next) => {
 	console.log(`${req.method} ${req.url} : ${res.statusCode}`);

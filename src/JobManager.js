@@ -2,16 +2,17 @@ import moment from "moment";
 import Alarm from "./Alarm.js";
 import Job from "./Job.js";
 import * as AudioPlayer from "./AudioPlayer.js";
-import config from "./config.js";
 import * as Constants from "../shared/constants.js";
 import * as ActionTypes from "../shared/action-types.js";
 import Events from "./EventBus.js";
 
-const SNOOZE_DURATION = moment.duration(config.alarm.snooze_time, 'Seconds');
+const SNOOZE_DURATION = moment.duration(1, 'Minutes');
 
+let initial_load = false;
 let JOBS = [];
-let ACTIVE;
-let SNOOZE_TIMEOUT_ID;
+let _active_alarm = undefined;
+let _snooze_timeout_id = undefined;
+let _snooze_until = undefined;
 
 function jobComparator(reverse) {
 	return (a, b) => {
@@ -28,9 +29,13 @@ function jobComparator(reverse) {
 	}
 }
 
+/**
+ * @param {Alarm} job
+ */
 function activationHandler(job) {
 	console.log(`Activating Alarm: ${job.id}`);
-	ACTIVE = job;
+	_active_alarm = job;
+	_snooze_timeout_id = undefined;
 	AudioPlayer.PlayAudio(job.alarm.sound);
 	dispatchCurrentState();
 }
@@ -41,9 +46,13 @@ function completionHanlder(job) {
 
 function stopActive() {
 	AudioPlayer.StopAudio();
-	ACTIVE = null;
-	if (SNOOZE_TIMEOUT_ID) {
-		clearTimeout(SNOOZE_TIMEOUT_ID);
+	if (_active_alarm) {
+		console.log(`Stopping alarm: ${_active_alarm.id}`);
+		_active_alarm = undefined;
+	}
+	if (_snooze_timeout_id) {
+		clearTimeout(_snooze_timeout_id);
+		_snooze_timeout_id = undefined;
 	}
 	dispatchCurrentState();
 }
@@ -51,10 +60,14 @@ function stopActive() {
 function snoozeActive() {
 	// We probably just want to do this regardless of whether there's an active alarm.
 	AudioPlayer.StopAudio();
-	if (ACTIVE) {
-		ACTIVE.snoozingUntil = moment().add(SNOOZE_DURATION, 'Seconds');
+	if (_active_alarm) {
+		console.log(`Snoozing alarm: ${_active_alarm.id}`);
+		_snooze_until = moment().add(SNOOZE_DURATION);
+		_snooze_timeout_id = setTimeout(
+			() => activationHandler(_active_alarm),
+			SNOOZE_DURATION.asMilliseconds()
+		);
 		dispatchCurrentState();
-		SNOOZE_TIMEOUT_ID = setTimeout(SNOOZE_DURATION, () => activationHandler(job));
 	}
 }
 
@@ -71,12 +84,12 @@ function dispatchCurrentState() {
  */
 function getState() {
 	let state = {};
-	if (ACTIVE) {
+	if (_active_alarm) {
 		// There's an active (possibly snoozing) alarm.
-		state.name = ACTIVE.name;
-		if (ACTIVE.isSnoozing) {
+		state.name = _active_alarm.name;
+		if (_snooze_timeout_id) {
 			state.status = Constants.STATUS_SNOOZING;
-			state.activationTime = ACTIVE.snoozingUntil;
+			state.activationTime = _snooze_until.unix();
 		}
 		else {
 			state.status = Constants.STATUS_ACTIVE;
@@ -98,6 +111,9 @@ function getState() {
 	return state;
 }
 
+/**
+ * @param {Alarm} alarm 
+ */
 function updateAlarmJob(alarm) {
 	console.log(`Updating job for alarm: ${alarm._id}`);
 	let job = JOBS.find(j => j.id === alarm._id);
@@ -108,6 +124,9 @@ function updateAlarmJob(alarm) {
 	}
 }
 
+/**
+ * @param {String} alarmId 
+ */
 function removeAlarmJob(alarmId) {
 	console.log(`Removing job for alarm: ${alarmId}`);
 	let job = JOBS.find(j => j.id === alarmId);
@@ -118,7 +137,7 @@ function removeAlarmJob(alarmId) {
 }
 
 async function loadAllJobs() {
-	await Alarm.find().then(list => {
+	await Alarm.find({}).then(list => {
 		JOBS = list.filter(a => a.enabled).map(alarm => new Job(alarm)).sort(jobComparator(true));
 	})
 	console.log(`Loaded ${JOBS.length} jobs.`)
