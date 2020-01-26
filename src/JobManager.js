@@ -159,7 +159,7 @@ async function loadAllJobs() {
 	dispatchCurrentState();
 }
 
-export default function init() {
+export default async function init() {
 	Events.on(ActionTypes.ALARM_SNOOZE, snoozeActive);
 	Events.on(ActionTypes.ALARM_STOP, stopActive);
 
@@ -169,4 +169,6 @@ export default function init() {
 	Events.on(ActionTypes.REQUEST_STATE, dispatchCurrentState);
 	Events.on(ActionTypes.ALARM_JOB_ACTIVATED, activationHandler);
 	Events.on(ActionTypes.ALARM_JOB_COMPLETED, completionHanlder);
+
+	return await loadAllJobs();
 }

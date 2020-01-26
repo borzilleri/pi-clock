@@ -1,5 +1,4 @@
 import camo from 'camo';
-import Events from './EventBus.js';
 import moment from 'moment';
 
 class LocalSettings extends camo.Document {
@@ -26,18 +25,22 @@ class SettingsWrapper {
 	}
 }
 
-let settingsObj = {} //TODO: This is just ugly and hacky. Fix this.
+let settingsObj;
 
 async function loadSettings() {
 	let obj = await LocalSettings.findOne({});
 	if (!obj) {
 		obj = await LocalSettings.create({}).save();
 	}
-	settingsObj = obj;
+	return obj;
 }
 
-export function init() {
-	// Should probably load settings here.
+export async function init() {
+	settingsObj = await loadSettings();
+	return settingsObj
 }
 
+/**
+ * @type {SettingsWrapper}
+ */
 export const Settings = new SettingsWrapper();

@@ -18,13 +18,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 let database;
 camo.connect(config.store.db_uri).then(db => {
+	// Load the DB.
 	console.log("Connected to db.");
 	database = db;
-
+}).then(() => {
+	// Initialize Modules
+	SettingsInit();
 	SocketManagerInit();
 	JobManagerInit();
-	SettingsInit();
-
+}).then(() => {
+	// Initialize our Express App.
 	app.use(express.json());
 	app.use('/client', express.static('client'));
 	app.get('/clock', (_, res, next) => {
@@ -41,8 +44,8 @@ camo.connect(config.store.db_uri).then(db => {
 		console.log(`${req.method} ${req.url} : ${res.statusCode}`);
 		next();
 	});
-
+}).then(() => {
+	// Start our server.
 	const port = config.server.port;
 	server.listen(port, () => console.log(`pi-cloock listening on port ${port}!`));
-
 });

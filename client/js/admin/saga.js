@@ -1,6 +1,6 @@
 import { all, takeEvery, call, put } from "/vendor/redux-saga-effects.js"
 import * as ActionTypes from '../action-types.js';
-import AlarmClient from '../clients/AlarmClient.js/index.js';
+import AlarmClient from '../clients/AlarmClient.js';
 
 function* fetchAlarmsSaga() {
 	yield takeEvery(ActionTypes.ALARM_FETCH_ALL, fetchAlarmWorker)
