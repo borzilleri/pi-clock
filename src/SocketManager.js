@@ -12,7 +12,6 @@ function messageHandler(msg) {
 	}
 }
 
-
 function connectionHandler(socket) {
 	console.log("Client connected.");
 	socket.on('message', messageHandler);
