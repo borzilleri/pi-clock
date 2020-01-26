@@ -1,6 +1,7 @@
 import cron from 'cron';
 import Events from './EventBus.js';
-import { ALARM_JOB_ACTIVATED, ALARM_JOB_COMPLETED } from '../shared/action-types.js';
+import Alarm from './Alarm.js';
+import { ALARM_JOB_ACTIVATED, ALARM_JOB_COMPLETED } from '../client/js/action-types.js';
 
 class Job {
 	cron;
@@ -36,9 +37,15 @@ class Job {
 		Events.emit(ALARM_JOB_COMPLETED, this);
 	}
 
+	/**
+	 * @param {Alarm} alarm 
+	 */
 	update(alarm) {
-		// Only update the cron job if the schedule changed.
-		if (this.alarm.cronSchedule !== alarm.cronSchedule) {
+		if (!alarm.enabled) {
+			this.stop();
+		}
+		else if (this.alarm.cronSchedule !== alarm.cronSchedule) {
+			// Only update the cron job if the schedule changed.
 			console.log(`Updating time for job: ${this.id}`)
 			this.cron.setTime(cron.time(alarm.cronSchedule));
 			this.cron.start();

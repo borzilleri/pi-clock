@@ -1,6 +1,6 @@
 import { io } from "./server.js";
 import Events from "./EventBus.js";
-import { SET_STATE, REQUEST_STATE } from "../shared/action-types.js";
+import { SET_STATE, REQUEST_STATE } from "../client/js/action-types.js";
 
 function messageHandler(msg) {
 	console.log("Socket message received", msg);

@@ -1,4 +1,4 @@
-import html from "../render-html.js";
+import html from "../../html.js";
 
 class InactiveStatus extends React.Component {
 	render() {

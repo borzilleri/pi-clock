@@ -1,5 +1,5 @@
-import html from '../render-html.js';
-import { snoozeAlarm, stopAlarm } from '/shared/actions.js';
+import html from "../../html.js";
+import { snoozeAlarm, stopAlarm } from '../../actions.js';
 
 const snoozeMapDispatchToProps = (dispatch) => {
 	return {

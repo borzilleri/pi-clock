@@ -1,4 +1,4 @@
-import html from "../render-html.js";
+import html from "../../html.js";
 
 // Test Alarm: 12:12
 const mapStateToProps = (state) => {

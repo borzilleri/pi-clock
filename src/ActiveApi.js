@@ -1,7 +1,7 @@
 import express from 'express';
 import expressAwait from '@awaitjs/express';
 import Events from './EventBus.js';
-import { ALARM_SNOOZE, ALARM_STOP } from "../shared/action-types.js";
+import { ALARM_SNOOZE, ALARM_STOP } from "../client/js/action-types.js";
 
 let router = expressAwait.decorateRouter(express.Router());
 

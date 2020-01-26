@@ -1,7 +1,6 @@
-
 import createSagaMiddleware from "/vendor/redux-saga.js";
 import rootReducer from "./reducers.js";
-import saga from "./sagas.js";
+import saga from "./saga.js";
 
 const initSagaMiddleware = createSagaMiddleware();
 const storeEnhancers = Redux.compose;

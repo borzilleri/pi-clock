@@ -1,5 +1,5 @@
-import html from "../render-html.js";
-import { STATUS_PENDING, STATUS_ACTIVE, STATUS_SNOOZING } from "/shared/constants.js";
+import html from "../../html.js";
+import { STATUS_PENDING, STATUS_ACTIVE, STATUS_SNOOZING } from "../../constants.js";
 
 import ActiveAlarm from "./alarm-active.js";
 import SnoozingAlarm from "./alarm-snoozing.js";

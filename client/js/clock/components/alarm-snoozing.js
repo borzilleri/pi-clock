@@ -1,4 +1,4 @@
-import html from "../render-html.js";
+import html from "../../html.js";
 
 function formatSnoozeTime(snoozeUntil) {
 	let duration = moment.duration(snoozeUntil.diff(moment()));

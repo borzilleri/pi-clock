@@ -1,5 +1,5 @@
-import { SET_STATE } from "/shared/action-types.js";
-import { STATUS_INACTIVE } from "/shared/constants.js";
+import { SET_STATE } from "../action-types.js";
+import { STATUS_INACTIVE } from "../constants.js";
 
 const initialState = {
   name: "",

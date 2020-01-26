@@ -1,0 +1,82 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Helvetica, Arial, sans-serif;
+	box-sizing: border-box;
+	text-align: left;
+}
+
+#alarm-list {
+	margin: auto;
+	width: 75%;
+	border-collapse: collapse;
+}
+
+td, th {
+	text-align: left;
+	padding: .75rem;
+	border-top: 1px solid lightgray;
+}
+thead th {
+	border-bottom: 2px solid lightgray;
+}
+
+tr:nth-child(odd) {
+	background-color: white;
+}
+tr:nth-child(even) {
+	background-color: lightblue;
+}
+
+.label {
+	display: inline-block;
+	padding: .25em .4em;
+	font-size: 75%;
+	font-weight: 700;
+	line-height: 1;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25em;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in;
+}
+
+.week-day {
+	color: white;
+	background: blue;
+}
+
+
+
+.onoffswitch {
+	position: relative; width: 90px;
+	-webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+	display: none;
+}
+.onoffswitch-label {
+	display: block; overflow: hidden; cursor: pointer;
+	height: 30px; padding: 0; line-height: 30px;
+	border: 2px solid #999999; border-radius: 30px;
+	background-color: #EEEEEE;
+	transition: background-color 0.3s ease-in;
+}
+.onoffswitch-label:before {
+	content: "";
+	display: block; width: 30px; margin: 0px;
+	background: #FFFFFF;
+	position: absolute; top: 0; bottom: 0;
+	right: 58px;
+	border: 2px solid #999999; border-radius: 30px;
+	transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label {
+	background-color: #6BDB71;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label, .onoffswitch-checkbox:checked + .onoffswitch-label:before {
+ border-color: #6BDB71;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label:before {
+	right: 0px; 
+}

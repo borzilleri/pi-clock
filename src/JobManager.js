@@ -2,13 +2,14 @@ import moment from "moment";
 import Alarm from "./Alarm.js";
 import Job from "./Job.js";
 import * as AudioPlayer from "./AudioPlayer.js";
-import * as Constants from "../shared/constants.js";
-import * as ActionTypes from "../shared/action-types.js";
+import * as Constants from "../client/js/constants.js";
+import * as ActionTypes from "../client/js/action-types.js";
 import Events from "./EventBus.js";
+import { Settings } from "./Settings.js";
 
-const SNOOZE_DURATION = moment.duration(1, 'Minutes');
-
-let initial_load = false;
+/**
+ * @type {Array[Alarm]}
+ */
 let JOBS = [];
 let _active_alarm = undefined;
 let _snooze_timeout_id = undefined;
@@ -62,10 +63,10 @@ function snoozeActive() {
 	AudioPlayer.StopAudio();
 	if (_active_alarm) {
 		console.log(`Snoozing alarm: ${_active_alarm.id}`);
-		_snooze_until = moment().add(SNOOZE_DURATION);
+		_snooze_until = moment().add(Settings.snooze_duration);
 		_snooze_timeout_id = setTimeout(
 			() => activationHandler(_active_alarm),
-			SNOOZE_DURATION.asMilliseconds()
+			Settings.snooze_duration.asMilliseconds()
 		);
 		dispatchCurrentState();
 	}
@@ -116,10 +117,24 @@ function getState() {
  */
 function updateAlarmJob(alarm) {
 	console.log(`Updating job for alarm: ${alarm._id}`);
+	/**
+	 * @type {Job}
+	 */
 	let job = JOBS.find(j => j.id === alarm._id);
-	if (job) {
+
+	let update = false;
+	if (!job && alarm.enabled) {
+		console.log("creating new job");
+		JOBS.push(new Job(alarm));
+		update = true;
+	}
+	else if (job) {
+		console.log("updating job.");
 		job.update(alarm);
-		JOBS.sort(jobComparator(true));
+		update = true;
+	}
+	if (update) {
+		JOBS = JOBS.filter(j => j.alarm.enabled).sort(jobComparator(true))
 		dispatchCurrentState();
 	}
 }

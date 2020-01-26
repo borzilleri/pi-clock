@@ -1,6 +1,6 @@
 import { eventChannel } from '/vendor/redux-saga.js';
 import { actionChannel, all, take, call, put } from "/vendor/redux-saga-effects.js"
-import * as ActionTypes from '/shared/action-types.js';
+import * as ActionTypes from '../action-types.js';
 
 const wssUrl = "http://localhost:3000";
 let socket;
