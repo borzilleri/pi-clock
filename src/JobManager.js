@@ -162,9 +162,10 @@ async function loadAllJobs() {
 export default function init() {
 	Events.on(ActionTypes.ALARM_SNOOZE, snoozeActive);
 	Events.on(ActionTypes.ALARM_STOP, stopActive);
+
 	Events.on(ActionTypes.ALARM_UPDATED, updateAlarmJob);
 	Events.on(ActionTypes.ALARM_DELETED, removeAlarmJob);
-	Events.on(ActionTypes.DATABASE_LOADED, loadAllJobs);
+
 	Events.on(ActionTypes.REQUEST_STATE, dispatchCurrentState);
 	Events.on(ActionTypes.ALARM_JOB_ACTIVATED, activationHandler);
 	Events.on(ActionTypes.ALARM_JOB_COMPLETED, completionHanlder);

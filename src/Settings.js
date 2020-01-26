@@ -1,6 +1,5 @@
 import camo from 'camo';
 import Events from './EventBus.js';
-import { DATABASE_LOADED } from '../client/js/action-types.js';
 import moment from 'moment';
 
 class LocalSettings extends camo.Document {
@@ -38,7 +37,7 @@ async function loadSettings() {
 }
 
 export function init() {
-	Events.on(DATABASE_LOADED, loadSettings);
+	// Should probably load settings here.
 }
 
 export const Settings = new SettingsWrapper();

@@ -1,4 +1,5 @@
 export const API_ERROR = "api-error";
+
 export const ALARM_FETCH_ALL = 'alarms/fetch/all';
 export const ALARM_FETCH_ONE = 'alarms/fetch/one';
 export const ALARM_SET_ALL = 'alarms/set/all';
@@ -17,6 +18,5 @@ export const ALARM_STOP = 'alarm-stop';
 export const REQUEST_STATE = 'request-state';
 export const ALARM_UPDATED = 'ALARM_UPDATED';
 export const ALARM_DELETED = 'ALARM_DELETED';
-export const DATABASE_LOADED = 'DATABASE_LOADED';
 export const ALARM_JOB_ACTIVATED = 'ALARM_JOB_ACTIVATED';
 export const ALARM_JOB_COMPLETED = 'ALARM_JOB_COMPLETED';
