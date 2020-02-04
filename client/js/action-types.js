@@ -1,14 +1,21 @@
 export const API_ERROR = "api-error";
 
-export const ALARM_FETCH_ALL = 'alarms/fetch/all';
-export const ALARM_FETCH_ONE = 'alarms/fetch/one';
-export const ALARM_SET_ALL = 'alarms/set/all';
-export const ALARM_SET_ONE = 'alarms/set/one'
+// These events are used by the Admin App for CRUD ops on alarms.
+export const MODAL_CLOSE = "modal/close";
 
-export const ALARM_CREATE = 'alarms/create';
-export const ALARM_UPDATE = 'alarms/update';
-export const ALARM_DELETE = 'alarms/delete';
+export const ALARM_EDIT = "alarm/edit";
 
+export const ALARM_LIST_REQUEST = "alarm/list/request";
+export const ALARM_LIST_RESPONSE = "alarm/list/response";
+
+export const ALARM_SAVE_REQUEST = "alarm/save/request";
+export const ALARM_SAVE_RESPONSE = "alarm/save/response";
+
+export const ALARM_DELETE_REQUEST = "alarm/delete/request";
+export const ALARM_DELETE_RESPONSE = "alarm/delete/response";
+
+
+// These are used by the Clock App.
 export const SET_STATE = 'init-state';
 export const SERVER_MESSAGE = 'server-message';
 export const ALARM_SNOOZE = 'alarm-snooze';

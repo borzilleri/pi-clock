@@ -18,8 +18,8 @@ let _snooze_until = undefined;
 function jobComparator(reverse) {
 	return (a, b) => {
 		let order = reverse ? 1 : -1;
-		let a_next = a.nextActivation();
-		let b_next = b.nextActivation();
+		let a_next = a.nextActivation;
+		let b_next = b.nextActivation;
 		if (a_next < b_next) {
 			return -1 * order;
 		}
@@ -147,7 +147,7 @@ function removeAlarmJob(alarmId) {
 	let job = JOBS.find(j => j.id === alarmId);
 	JOBS = JOBS.filter(j => j.id !== alarmId);
 	if (job) {
-		this.job.stop();
+		job.stop();
 	}
 }
 

@@ -1,19 +1,37 @@
 import camo from 'camo';
 
 export default class Alarm extends camo.Document {
+	/**
+	 * @type {String}
+	 */
 	name;
+	/**
+	 * @type {String}
+	 */
 	sound;
-	recurring;
+	/**
+	 * @type {Boolean}
+	 */
 	enabled;
+	/**
+	 * @type {Number}
+	 */
 	hour;
+	/**
+	 * @type {Number}
+	 */
 	minute;
+	/**
+	 * @type {Array[Number]}
+	 */
 	weekDay;
+	recurring;
 
 	constructor() {
 		super();
 		this.name = {
 			type: String,
-			default: "TestAlarm"
+			default: "New Alarm"
 		}
 		this.sound = String;
 		this.recurring = {
@@ -38,7 +56,6 @@ export default class Alarm extends camo.Document {
 		};
 		this.weekDay = {
 			type: [Number],
-			default: 0,
 			min: 0,
 			max: 6
 		};

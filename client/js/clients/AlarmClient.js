@@ -1,6 +1,17 @@
 
 const URI_BASE = '/alarms';
 
+/**
+ * @param {String} id 
+ * @param {Object} data 
+ */
+async function Save(id, data) {
+	return id ? await Update(id, data) : await Create(data);
+}
+
+/**
+ * @param {Object} data 
+ */
 async function Create(data) {
 	const response = await fetch(URI_BASE, {
 		method: 'POST',
@@ -10,11 +21,14 @@ async function Create(data) {
 		body: JSON.stringify(data)
 	});
 	return await response.json();
-
 }
 
-async function Update(data) {
-	const response = await fetch(`${URI_BASE}/${data._id}`, {
+/**
+ * @param {String} id
+ * @param {Object} data 
+ */
+async function Update(id, data) {
+	const response = await fetch(`${URI_BASE}/${id}`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json'
@@ -22,6 +36,16 @@ async function Update(data) {
 		body: JSON.stringify(data)
 	});
 	return await response.json();
+}
+
+/**
+ * @param {String} id
+ */
+async function Delete(id) {
+	await fetch(`${URI_BASE}/${id}`, {
+		method: 'DELETE'
+	});
+	return id;
 }
 
 async function List() {
@@ -32,5 +56,7 @@ async function List() {
 export default {
 	List,
 	Create,
-	Update
+	Update,
+	Save,
+	Delete
 }

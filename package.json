@@ -5,13 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "watch": "nodemon index.js"
+    "watch": "nodemon -w index.js -w src/ -w client/constants.js -w client/action-types.js index.js"
   },
   "author": "Jonathan Borzilleri <jonathan@borzilleri.net>",
   "license": "MIT",
-  "_moduleAliases": {
-    "$src": "./src"
-  },
   "dependencies": {
     "@awaitjs/express": "^0.4.0",
     "camo": "^0.12.3",

@@ -3,11 +3,10 @@ import rootReducer from "./reducers.js";
 import saga from "./saga.js";
 
 const initSagaMiddleware = createSagaMiddleware();
-const storeEnhancers = Redux.compose;
 
 const store = Redux.createStore(
 	rootReducer,
-	storeEnhancers(Redux.applyMiddleware(initSagaMiddleware))
+	Redux.compose(Redux.applyMiddleware(initSagaMiddleware))
 );
 
 initSagaMiddleware.run(saga);

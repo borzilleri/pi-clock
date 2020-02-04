@@ -1,47 +1,27 @@
-import * as ActionTypes from './action-types.js';
-
-export function toggleAlarmEnabled(alarm) {
-	return updateAlarm({
-		_id: alarm._id,
-		enabled: !alarm.enabled
-	});
-}
-
-export function updateAlarm(payload) {
-	return {
-		type: ActionTypes.ALARM_UPDATE,
-		payload
-	}
-}
-
-export function fetchAlarms() {
-	return {
-		type: ActionTypes.ALARM_FETCH_ALL
-	}
-}
+//@ts-check
+import { SET_STATE, SERVER_MESSAGE, ALARM_SNOOZE, ALARM_STOP, MODAL_CLOSE } from './action-types.js';
 
 export function setState(payload) {
 	return {
-		type: ActionTypes.SET_STATE,
+		type: SET_STATE,
 		payload
 	}
 };
 
 export function snoozeAlarm() {
 	return {
-		type: ActionTypes.SERVER_MESSAGE,
+		type: SERVER_MESSAGE,
 		payload: {
-			type: ActionTypes.ALARM_SNOOZE
+			type: ALARM_SNOOZE
 		}
 	}
 }
 
 export function stopAlarm() {
 	return {
-		type: ActionTypes.SERVER_MESSAGE,
+		type: SERVER_MESSAGE,
 		payload: {
-			type: ActionTypes.ALARM_STOP
+			type: ALARM_STOP
 		}
 	}
 }
-

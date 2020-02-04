@@ -50,7 +50,7 @@ router.putAsync('/:id', async (req, res, next) => {
 router.deleteAsync('/:id', async (req, res, next) => {
 	await Alarm.deleteOne({ _id: req.params.id });
 	Events.emit(ALARM_DELETED, req.params.id);
-	res.status(204);
+	res.send(204);
 	next();
 });
 

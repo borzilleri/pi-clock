@@ -1,59 +1,64 @@
 import html from '../../html.js';
-import { toggleAlarmEnabled } from '../../actions.js';
+import autoBind from '../../autoBind.js';
+import { WEEK_DAYS } from '../../constants.js';
+import { toggleAlarmEnabled, editAlarm, deleteAlarm } from '../actions.js';
+import ToggleCheckbox from './ToggleCheckbox.js';
 
-const alarmRowDispatchToProps = {
-	toggleAlarmEnabled
-}
 class ConnectedAlarmRow extends React.Component {
 	constructor(props) {
 		super(props);
-		this.formatTime = this.formatTime.bind(this);
-		this.formatDays = this.formatDays.bind(this);
-		this.toggleEnabled = this.toggleEnabled.bind(this);
-	}
-	formatTime() {
-		return moment({ hour: this.props.alarm.hour, minute: this.props.alarm.minute })
-			.format('HH:mm');
+		autoBind(this);
 	}
 	formatDays() {
-		return this.props.alarm.weekDay.sort().map(d => {
-			const day = moment().day(d).format('ddd');
-			return html`<span key=${d} className="label week-day">${day}</span> `
-		});
+		return this.props.alarm.weekDay.sort()
+			.map(d => html`<span key=${d} className="label week-day">${WEEK_DAYS[d]}</span>`);
 	}
 	toggleEnabled() {
 		this.props.toggleAlarmEnabled(this.props.alarm);
+	}
+	/**
+	 * @param {Event} e 
+	 */
+	editAlarm(e) {
+		e.preventDefault();
+		this.props.editAlarm(this.props.alarm);
+	}
+	/**
+	 * @param {Event} e 
+	 */
+	deleteAlarm(e) {
+		e.preventDefault();
+		this.props.deleteAlarm(this.props.alarm._id);
 	}
 	render() {
 		return html`
 		<tr>
 			<td>${this.props.alarm.name}</td>
-			<td>${this.formatTime()}</td>
+			<td>${moment({ hour: this.props.alarm.hour, minute: this.props.alarm.minute }).format('HH:mm')}</td>
 			<td>${this.formatDays()}</td>
-			<td>
-				<div className="onoffswitch">
-					<input onChange=${this.toggleEnabled} type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="${this.props.alarm._id}-enabled" defaultChecked=${this.props.alarm.enabled}/>
-					<label key=${this.props.alarm._id} className="onoffswitch-label" htmlFor="${this.props.alarm._id}-enabled"></label>
-				</div>
-			</td>
+			<td><${ToggleCheckbox} id=${this.props.alarm._id} onChange=${this.toggleEnabled} 
+				defaultChecked=${this.props.alarm.enabled}/></td>
+			<td><a href="#" onClick=${this.editAlarm}>✏️</a></td>
+			<td><a href="#" onClick=${this.deleteAlarm}>🗑</a></td>
 		</tr>
 		`
 	}
 }
-const AlarmRow = ReactRedux.connect(null, alarmRowDispatchToProps)(ConnectedAlarmRow);
+const AlarmRow = ReactRedux.connect(null, { toggleAlarmEnabled, editAlarm, deleteAlarm })(ConnectedAlarmRow);
 
-const mapStateToProps = state => {
-	console.log("updating alarm list state", state);
+
+const mapStateToProps = (state) => {
 	return { alarms: state.alarms };
 };
-const ConnectedAlarmList = ({ alarms }) => (html`
+const ConnectedAlarmList = ({ alarms, editAlarm }) => (html`
 	<table id="alarm-list">
 		<thead>
 			<tr>
 				<th>Alarm Name</th>
 				<th>Time</th>
-				<th>Days</th>
+				<th>Recurs On</th>
 				<th></th>
+				<th colSpan="2"><button className="button" onClick="${() => editAlarm()}">Add Alarm</button></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -62,5 +67,5 @@ const ConnectedAlarmList = ({ alarms }) => (html`
 	</table>
 `);
 
-const AlarmList = ReactRedux.connect(mapStateToProps)(ConnectedAlarmList);
+const AlarmList = ReactRedux.connect(mapStateToProps, { editAlarm })(ConnectedAlarmList);
 export default AlarmList;
