@@ -4,11 +4,18 @@ import Alarm from './Alarm.js';
 import { ALARM_JOB_ACTIVATED, ALARM_JOB_COMPLETED } from '../client/js/action-types.js';
 
 class Job {
+	/**
+	 * @type {cron.CronJob}
+	 */
 	cron;
+	/**
+	 * @type {Alarm}
+	 */
 	alarm;
 
 	constructor(alarm) {
 		this.alarm = alarm;
+		console.log(alarm.cronSchedule);
 		this.cron = cron.job(
 			alarm.cronSchedule,
 			this.onTick,
@@ -46,7 +53,7 @@ class Job {
 		}
 		else if (this.alarm.cronSchedule !== alarm.cronSchedule) {
 			// Only update the cron job if the schedule changed.
-			console.log(`Updating time for job: ${this.id}`)
+			console.log(`Updating time for job: ${this.id} to ${alarm.cronSchedule}`)
 			this.cron.setTime(cron.time(alarm.cronSchedule));
 			this.cron.start();
 		}

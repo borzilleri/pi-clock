@@ -11,8 +11,17 @@ import { Settings } from "./Settings.js";
  * @type {Array[Alarm]}
  */
 let JOBS = [];
+/**
+ * @type {Job}
+ */
 let _active_alarm = undefined;
+/**
+ * @type {Number}
+ */
 let _snooze_timeout_id = undefined;
+/**
+ * @type {Number}
+ */
 let _snooze_until = undefined;
 
 function jobComparator(reverse) {
@@ -49,6 +58,9 @@ function stopActive() {
 	AudioPlayer.StopAudio();
 	if (_active_alarm) {
 		console.log(`Stopping alarm: ${_active_alarm.id}`);
+		if (!_active_alarm.alarm.recurring) {
+			_active_alarm.stop();
+		}
 		_active_alarm = undefined;
 	}
 	if (_snooze_timeout_id) {
@@ -99,6 +111,9 @@ function getState() {
 	}
 	else if (JOBS.length > 0) {
 		// There's an upcoming alarm.
+		/**
+		 * @type {Job}
+		 */
 		let job = JOBS[0];
 		state.name = job.name;
 		state.status = Constants.STATUS_PENDING;
