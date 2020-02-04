@@ -1,4 +1,5 @@
 import html from "../../html.js";
+import autoBind from '../../autoBind.js';
 import { STATUS_PENDING, STATUS_ACTIVE, STATUS_SNOOZING } from "../../constants.js";
 
 import ActiveAlarm from "./alarm-active.js";
@@ -18,6 +19,10 @@ class InactiveAlarm extends React.Component {
 }
 
 class ConnectedAlarm extends React.Component {
+	constructor(props) {
+		super(props);
+		autoBind(this);
+	}
 	getComponent() {
 		switch (this.props.alarmStatus) {
 			case STATUS_SNOOZING:

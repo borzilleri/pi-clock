@@ -1,12 +1,5 @@
 //@ts-check
-import { SET_STATE, SERVER_MESSAGE, ALARM_SNOOZE, ALARM_STOP, MODAL_CLOSE } from './action-types.js';
-
-export function setState(payload) {
-	return {
-		type: SET_STATE,
-		payload
-	}
-};
+import { SERVER_MESSAGE, ALARM_SNOOZE, ALARM_STOP } from '../action-types.js';
 
 export function snoozeAlarm() {
 	return {

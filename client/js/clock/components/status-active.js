@@ -1,5 +1,5 @@
 import html from "../../html.js";
-import { snoozeAlarm, stopAlarm } from '../../actions.js';
+import { snoozeAlarm, stopAlarm } from '../actions.js';
 
 const snoozeMapDispatchToProps = (dispatch) => {
 	return {
