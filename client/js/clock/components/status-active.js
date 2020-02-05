@@ -13,7 +13,6 @@ class ConnectedSnoozeButton extends React.Component {
 	}
 	handleClick(e) {
 		e.preventDefault();
-		console.log("Snoozing active alarm.");
 		this.props.snoozeAlarm();
 	}
 	render() {
@@ -36,7 +35,6 @@ class ConnectedStopButton extends React.Component {
 	}
 	handleClick(e) {
 		e.preventDefault();
-		console.log("Active alarm stopped.");
 		this.props.stopAlarm();
 	}
 	render() {
