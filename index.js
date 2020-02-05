@@ -11,6 +11,7 @@ import { init as SettingsInit } from './src/Settings.js';
 import vendorApi from './src/vendor-api.js';
 import alarmsRouter from './src/AlarmsApi.js';
 import activeRouter from './src/ActiveApi.js';
+import soundsRouter from './src/SoundApi.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -39,6 +40,7 @@ camo.connect(config.store.db_uri).then(db => {
 
 	app.use('/alarms', alarmsRouter);
 	app.use('/active', activeRouter);
+	app.use('/sounds', soundsRouter);
 	app.use('/vendor', vendorApi);
 	app.use((req, res, next) => {
 		console.log(`${req.method} ${req.url} : ${res.statusCode}`);

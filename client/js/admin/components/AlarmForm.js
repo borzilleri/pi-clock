@@ -29,6 +29,26 @@ const Checkbox = ({ name, checked, onChange }) => {
 		</div>`;
 }
 
+const mapStateToSoundSelectProps = (state) => {
+	return {
+		sounds: state.sounds.sounds,
+		default: state.sounds.default
+	}
+}
+const ConnectedSoundSelect = ({ selected, onChange, ...props }) => {
+	return html`
+		<div className="form-group">
+			<label htmlFor="alarm-sound">Sound</label>
+			<select id="alarm-sound" className="form-control" onChange=${onChange} defaultValue=${selected}>
+				${props.sounds.map(sound => 
+					html`<option key=${sound}>${sound}</option>`
+				)}
+			</select>
+		</div>
+	`;
+}
+let SoundSelect = ReactRedux.connect(mapStateToSoundSelectProps)(ConnectedSoundSelect);
+
 
 class ConnectedAlarmForm extends React.Component {
 	constructor(props) {
@@ -81,11 +101,7 @@ class ConnectedAlarmForm extends React.Component {
 			<${TextInput} name="ID" defaultValue=${this.props.data._id} readOnly/>
 			<${TextInput} name="Name" defaultValue=${this.props.data.name} onChange=${this.onChangeName}/>
 
-			<div className="form-group">
-				<label htmlFor="alarm-sound">Sound</label>
-				<input className="form-control" id="alarm-sound" type="text" onChange=${this.onChangeSound}
-					defaultValue=${this.props.data.sound} readOnly/>
-			</div>
+			<${SoundSelect} onChange=${this.onChangeSound} selected=${this.props.data.sound}/>
 
 			<div className="form-group">
 				<label>Time</label>

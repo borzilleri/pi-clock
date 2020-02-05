@@ -1,11 +1,5 @@
-import { ALARM_LIST_RESPONSE, ALARM_SAVE_RESPONSE, ALARM_DELETE_RESPONSE, ALARM_EDIT, MODAL_CLOSE } from '../action-types.js';
+import { ALARM_LIST_RESPONSE, ALARM_SAVE_RESPONSE, ALARM_DELETE_RESPONSE, ALARM_EDIT, MODAL_CLOSE, SOUND_FETCH_RESPONSE } from '../action-types.js';
 import { MODAL_OFF, MODAL_ALARM_FORM } from '../constants.js';
-
-const alarmInitialState = [];
-const modalInitialState = {
-	type: MODAL_OFF,
-	data: undefined,
-};
 
 function updateObject(oldObject, objectUpdate) {
 	return Object.assign({}, oldObject, objectUpdate);
@@ -27,7 +21,21 @@ function createReducer(initialState, handlers) {
 	}
 }
 
+// Sounds Reducer
+const soundInitialState = {
+	sounds: ['Droplets'],
+	default: 'Droplets'
+}
+function setSounds(soundState, action) {
+	return action.payload;
+}
+
+const soundsReducer = createReducer(soundInitialState, {
+	[SOUND_FETCH_RESPONSE]: setSounds
+});
+
 // Alarms Reducer
+const alarmInitialState = [];
 
 function setAlarms(alarmState, action) {
 	return action.payload;
@@ -40,7 +48,7 @@ function setOneAlarm(alarmState, action) {
 	}
 	else {
 		newAlarms = alarmState.slice(0);
-		newAlarms.push(action.payload);	
+		newAlarms.push(action.payload);
 	}
 	return newAlarms;
 }
@@ -56,6 +64,10 @@ const alarmsReducer = createReducer(alarmInitialState, {
 });
 
 // Modal Reducer
+const modalInitialState = {
+	type: MODAL_OFF,
+	data: undefined,
+};
 
 function openAlarmEditor(modalState, action) {
 	return {
@@ -81,6 +93,7 @@ const editorReducer = createReducer(modalInitialState, {
 
 const appReducer = Redux.combineReducers({
 	alarms: alarmsReducer,
-	modal: editorReducer
+	sounds: soundsReducer,
+	modal: editorReducer,
 })
 export default appReducer;

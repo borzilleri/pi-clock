@@ -10,7 +10,7 @@ const PLAYER_EXE = findExec(config.audio.player);
 if (!PLAYER_EXE) {
 	throw new Error(`Unable to find player executable: ${config.audio.player}`)
 }
-let SOUND_FILES = Object.fromEntries(fs.readdirSync(SOUNDS_DIR, { withFileTypes: true })
+const SOUND_FILES = Object.fromEntries(fs.readdirSync(SOUNDS_DIR, { withFileTypes: true })
 	.filter(f => f.isFile())
 	.filter(f => {
 		let ext = path.extname(f.name);
@@ -35,7 +35,11 @@ function closeHandler(err) {
 }
 
 export function ListSounds() {
-	return SOUND_FILES;
+	return Object.keys(SOUND_FILES);
+}
+
+export function GetDefaultSound() {
+	return 'Droplets';
 }
 
 export function PlayAudio(soundName) {

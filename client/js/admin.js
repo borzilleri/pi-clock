@@ -11,5 +11,6 @@ ReactDOM.render(html`
 );
 
 // Initialize our state by dispatching an action to request it from the server.
-import { fetchAlarms } from "./admin/actions.js";
+import { fetchAlarms, fetchSounds } from "./admin/actions.js";
 store.dispatch(fetchAlarms())
+store.dispatch(fetchSounds())

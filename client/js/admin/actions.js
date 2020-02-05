@@ -1,5 +1,5 @@
 //@ts-check
-import { ALARM_EDIT, ALARM_SAVE_REQUEST, ALARM_LIST_REQUEST, ALARM_DELETE_REQUEST, MODAL_CLOSE } from '../action-types.js';
+import { ALARM_EDIT, ALARM_SAVE_REQUEST, ALARM_LIST_REQUEST, ALARM_DELETE_REQUEST, MODAL_CLOSE, SOUND_FETCH_REQUEST } from '../action-types.js';
 
 const newAlarm = {
 	name: "New Alarm",
@@ -58,4 +58,8 @@ export function closeEditor() {
 	return {
 		type: MODAL_CLOSE
 	}
+}
+
+export function fetchSounds() {
+	return { type: SOUND_FETCH_REQUEST }
 }

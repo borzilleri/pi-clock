@@ -14,6 +14,8 @@ export const ALARM_SAVE_RESPONSE = "alarm/save/response";
 export const ALARM_DELETE_REQUEST = "alarm/delete/request";
 export const ALARM_DELETE_RESPONSE = "alarm/delete/response";
 
+export const SOUND_FETCH_REQUEST = "sounds/fetch/request";
+export const SOUND_FETCH_RESPONSE = "sounds/fetch/response";
 
 // These are used by the Clock App.
 export const SET_STATE = 'init-state';
