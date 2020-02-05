@@ -24,8 +24,7 @@ export default class Alarm extends camo.Document {
 	/**
 	 * @type {Array[Number]}
 	 */
-	weekDay;
-	recurring;
+	weekDays;
 
 	constructor() {
 		super();
@@ -34,10 +33,6 @@ export default class Alarm extends camo.Document {
 			default: "New Alarm"
 		}
 		this.sound = String;
-		this.recurring = {
-			type: Boolean,
-			default: false
-		}
 		this.enabled = {
 			type: Boolean,
 			default: true
@@ -54,15 +49,20 @@ export default class Alarm extends camo.Document {
 			min: 0,
 			max: 59
 		};
-		this.weekDay = {
+		this.weekDays = {
 			type: [Number],
+			default: [],
 			min: 0,
 			max: 6
 		};
 	}
+	get recurring() {
+		return this.weekDays.length > 0;
+	}
 
 	get cronSchedule() {
-		let weekDayCron = this.weekDay.join(',') || '*';
+		let weekDayCron = this.weekDays.join(',') || '*';
 		return `0 ${this.minute} ${this.hour} * * ${weekDayCron}`;
 	}
 }
+

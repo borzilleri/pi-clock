@@ -10,7 +10,7 @@ class ConnectedAlarmRow extends React.Component {
 		autoBind(this);
 	}
 	formatDays() {
-		return this.props.alarm.weekDay.sort()
+		return this.props.alarm.weekDays.sort()
 			.map(d => html`<span key=${d} className="label week-day">${WEEK_DAYS[d]}</span>`);
 	}
 	toggleEnabled() {
@@ -50,7 +50,9 @@ const AlarmRow = ReactRedux.connect(null, { toggleAlarmEnabled, editAlarm, delet
 const mapStateToProps = (state) => {
 	return { alarms: state.alarms };
 };
-const ConnectedAlarmList = ({ alarms, editAlarm }) => (html`
+const ConnectedAlarmList = ({ alarms, editAlarm }) => {
+	alarms.sort((a,b) => a.name.localeCompare(b.name));
+	return html`
 	<table id="alarm-list">
 		<thead>
 			<tr>
@@ -64,8 +66,8 @@ const ConnectedAlarmList = ({ alarms, editAlarm }) => (html`
 		<tbody>
 		${alarms.map(el => (html`<${AlarmRow} key=${el._id} alarm=${el}/>`))}
 		</tbody>
-	</table>
-`);
+	</table>`;
+}
 
 const AlarmList = ReactRedux.connect(mapStateToProps, { editAlarm })(ConnectedAlarmList);
 export default AlarmList;

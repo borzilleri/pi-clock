@@ -7,8 +7,7 @@ const newAlarm = {
 	hour: 12,
 	minute: 12,
 	enabled: true,
-	recurring: false,
-	weekDay: []
+	weekDays: []
 };
 
 /**

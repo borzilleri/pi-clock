@@ -34,7 +34,7 @@ class ConnectedAlarmForm extends React.Component {
 	constructor(props) {
 		super(props);
 		autoBind(this);
-		this.state = {};
+		this.state = props.data._id ? {} : props.data;
 	}
 
 	/**
@@ -54,16 +54,26 @@ class ConnectedAlarmForm extends React.Component {
 		this.state.sound = e.target.value;
 	}
 	onChangeTime(e) {
-		console.log(`time changed to: ${e.target.value}`)
+		let time = moment(e.target.value, 'HH:mm');
+		this.state.hour = time.hour();
+		this.state.minute = time.minute();
 	}
 	onChangeEnabled(e) {
 		this.state.enabled = e.target.checked;
 	}
-	onChangeRecurring(e) {
-		this.state.recurring = e.target.checked;
-	}
 	onChangeWeekDay(e) {
-		console.log(`day ${e.target.value} set to: ${e.target.checked}`);
+		let weekDayIdx = parseInt(e.target.value);
+		if (!this.state.weekDays) {
+			this.state.weekDays = this.props.data.weekDays.slice(0);
+		}
+		let exists = this.state.weekDays.includes(weekDayIdx);
+		if (e.target.checked && !exists) {
+			this.state.weekDays.push(weekDayIdx);
+		}
+		if (!e.target.checked && exists) {
+			this.state.weekDays = this.state.weekDays.filter(d => d !== weekDayIdx);
+		}
+		this.state.weekDays.sort();
 	}
 	render() {
 		return html`
@@ -84,19 +94,17 @@ class ConnectedAlarmForm extends React.Component {
 			</div>
 
 			<${Checkbox} name="Enabled" checked=${this.props.data.enabled} onChange=${this.onChangeEnabled}/>
-			<${Checkbox} name="Recurring" checked=${this.props.data.weekDay.length > 0} onChange=${this.onChangeRecurring}/>			
 
 			<div className="form-group">
 				<label>Recurs On</label>
 				<div className="form-control">
 					${WEEK_DAYS.map((d, i) => html`<${WeekdayCheckbox} key="week-day-${i}" index=${i} 
-						checked=${this.props.data.weekDay.includes(i)} onChange=${this.onChangeWeekDay}>${d}</>`)}
+						checked=${this.props.data.weekDays.includes(i)} onChange=${this.onChangeWeekDay}>${d}</>`)}
 				</div>
 			</div>
 
 			<button className="button" type="submit">Save</button>
-		</form>
-		`;
+		</form>`;
 	}
 }
 
