@@ -57,9 +57,11 @@ function completionHanlder(job) {
 function stopActive() {
 	AudioPlayer.StopAudio();
 	if (_active_alarm) {
-		console.log(`Stopping alarm: ${_active_alarm.id}`);
+		let activeId = _active_alarm.id;
+		console.log(`Stopping alarm: ${activeId}`);
 		if (!_active_alarm.alarm.recurring) {
-			_active_alarm.stop();
+			console.log(`Disabling Alarm: ${activeId}`)
+			removeAlarmJob(activeId);
 		}
 		_active_alarm = undefined;
 	}

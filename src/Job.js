@@ -15,7 +15,6 @@ class Job {
 
 	constructor(alarm) {
 		this.alarm = alarm;
-		console.log(alarm.cronSchedule);
 		this.cron = cron.job(
 			alarm.cronSchedule,
 			this.onTick,
