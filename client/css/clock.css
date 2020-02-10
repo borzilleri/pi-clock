@@ -49,6 +49,10 @@ body {
 	text-decoration: none;
 }
 
+.stop-button.enabled {
+	background-color: crimson;
+}
+
 .status-snoozing-container {
 	color: green;
 }

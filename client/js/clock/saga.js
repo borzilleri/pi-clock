@@ -28,7 +28,6 @@ function* serverListenerSaga() {
 	const socketChannel = yield call(createSocketChannel, socket);
 	while (true) {
 		const action = yield take(socketChannel);
-		console.log("received server msg", action);
 		yield put(action)
 	}
 }
@@ -45,7 +44,6 @@ function* clientListenerSaga() {
 }
 
 function* handleRequest(payload) {
-	console.log('"handleRequest" payload received', payload);
 	socket.send(payload);
 }
 
