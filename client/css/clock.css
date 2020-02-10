@@ -70,3 +70,18 @@ body {
 	font-family: Helvetica, sans-serif;
 	color: orange;
 }
+
+.alarm-pending {
+	display: flex;
+}
+
+.alarm-name {
+	flex: 2 2 60vw;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.alarm-time {
+	flex: 1 1 40vw;
+	white-space: nowrap;
+}
