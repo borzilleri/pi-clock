@@ -54,13 +54,14 @@ function completionHanlder(job) {
 	console.log(`Completion handler for job: ${job.id}`);
 }
 
-function stopActive() {
+async function stopActive() {
 	AudioPlayer.StopAudio();
 	if (_active_alarm) {
 		let activeId = _active_alarm.id;
 		console.log(`Stopping alarm: ${activeId}`);
 		if (!_active_alarm.alarm.recurring) {
 			console.log(`Disabling Alarm: ${activeId}`)
+			await Alarm.findOneAndUpdate({ _id: activeId }, { enabled: false });
 			removeAlarmJob(activeId);
 		}
 		_active_alarm = undefined;
