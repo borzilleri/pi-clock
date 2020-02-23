@@ -5,7 +5,7 @@ import * as AudioPlayer from "./AudioPlayer.js";
 import * as Constants from "../client/js/constants.js";
 import * as ActionTypes from "../client/js/action-types.js";
 import Events from "./EventBus.js";
-import { Settings } from "./Settings.js";
+import Settings from "./Settings.js";
 
 /**
  * @type {Array[Alarm]}
@@ -177,14 +177,14 @@ async function loadAllJobs() {
 	dispatchCurrentState();
 }
 
-export default async function init() {
+export async function InitJobManager() {
 	Events.on(ActionTypes.ALARM_SNOOZE, snoozeActive);
 	Events.on(ActionTypes.ALARM_STOP, stopActive);
 
 	Events.on(ActionTypes.ALARM_UPDATED, updateAlarmJob);
 	Events.on(ActionTypes.ALARM_DELETED, removeAlarmJob);
 
-	Events.on(ActionTypes.REQUEST_STATE, dispatchCurrentState);
+	Events.on(ActionTypes.STATE_REQUEST, dispatchCurrentState);
 	Events.on(ActionTypes.ALARM_JOB_ACTIVATED, activationHandler);
 	Events.on(ActionTypes.ALARM_JOB_COMPLETED, completionHanlder);
 

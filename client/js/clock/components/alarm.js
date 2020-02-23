@@ -6,9 +6,9 @@ import ActiveAlarm from "./alarm-active.js";
 import SnoozingAlarm from "./alarm-snoozing.js";
 import PendingAlarm from "./alarm-pending.js";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({alarm}) => {
 	return {
-		alarmStatus: state.status
+		alarmStatus: alarm.status
 	}
 }
 

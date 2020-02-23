@@ -1,5 +1,6 @@
 import camo from 'camo';
 import moment from 'moment';
+import Events from './EventBus.js';
 
 class LocalSettings extends camo.Document {
 	/**
@@ -17,11 +18,19 @@ class LocalSettings extends camo.Document {
 }
 
 class SettingsWrapper {
+	utcOffset = moment().utcOffset();
+
 	/**
 	 * @returns {moment.Duration}
 	 */
 	get snooze_duration() {
 		return moment.duration(settingsObj.snooze_duration);
+	}
+
+	clientSettings() {
+		return {
+			utcOffset: this.utcOffset
+		}
 	}
 }
 
@@ -35,7 +44,7 @@ async function loadSettings() {
 	return obj;
 }
 
-export async function init() {
+export async function InitSettings() {
 	settingsObj = await loadSettings();
 	return settingsObj
 }
@@ -43,4 +52,5 @@ export async function init() {
 /**
  * @type {SettingsWrapper}
  */
-export const Settings = new SettingsWrapper();
+const Settings = new SettingsWrapper();
+export default Settings;

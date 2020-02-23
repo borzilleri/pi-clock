@@ -1,9 +1,9 @@
 import html from "../../html.js";
 
 // Test Alarm
-const mapStateToProps = (state) => {
+const mapStateToProps = ({alarm}) => {
 	return {
-		name: state.name,
+		name: alarm.name,
 	}
 }
 

@@ -2,8 +2,8 @@ import html from "../../html.js";
 
 let clockFormat = 'HH:mm';
 
-const mapStateToProps = ({ utcOffset }) => {
-	return { utcOffset }
+const mapStateToProps = ({ settings }) => {
+	return { utcOffset: settings.utcOffset }
 }
 class ConnectedClock extends React.Component {
 	constructor(props) {

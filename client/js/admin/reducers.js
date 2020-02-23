@@ -1,10 +1,6 @@
 import { ALARM_LIST_RESPONSE, ALARM_SAVE_RESPONSE, ALARM_DELETE_RESPONSE, ALARM_EDIT, MODAL_CLOSE, SOUND_FETCH_RESPONSE } from '../action-types.js';
 import { MODAL_OFF, MODAL_ALARM_FORM } from '../constants.js';
 
-function updateObject(oldObject, objectUpdate) {
-	return Object.assign({}, oldObject, objectUpdate);
-}
-
 function updateItemInArray(array, itemId, cb) {
 	return array.map(item => item._id === itemId ? cb(item) : item);
 }

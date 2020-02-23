@@ -25,7 +25,10 @@ export const ALARM_SNOOZE = 'alarm-snooze';
 export const ALARM_STOP = 'alarm-stop';
 
 // These are mostly server-side events.
-export const REQUEST_STATE = 'request-state';
+export const STATE_REQUEST = 'state/request';
+export const STATE_RESPONSE = 'state/response';
+export const SETTINGS_SET = 'settings/set';
+
 export const ALARM_UPDATED = 'ALARM_UPDATED';
 export const ALARM_DELETED = 'ALARM_DELETED';
 export const ALARM_JOB_ACTIVATED = 'ALARM_JOB_ACTIVATED';

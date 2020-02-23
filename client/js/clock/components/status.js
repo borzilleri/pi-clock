@@ -4,9 +4,9 @@ import ActiveStatus from "./status-active.js";
 import SnoozingStatus from "./status-snoozing.js";
 import InactiveStatus from "./status-inactive.js";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (alarm) => {
 	return {
-		alarmStatus: state.status
+		alarmStatus: alarm.status
 	}
 }
 

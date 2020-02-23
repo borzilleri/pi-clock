@@ -22,10 +22,6 @@ function activateScreen(activeState) {
 	}
 }
 
-function Init() {
+export function InitScreenManager() {
 	Events.on(ALARM_ACTIVATED, activateScreen);
-}
-
-export default {
-	Init
 }

@@ -2,16 +2,17 @@ import html from "../../html.js";
 
 const activationTimeFormat = 'HH:mm';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({alarm, settings}) => {
 	return {
-		name: state.name,
-		activeMoment: moment.unix(state.activationTime),
+		name: alarm.name,
+		activeMoment: moment.unix(alarm.activationTime).utcOffset(settings.utcOffset),
+		utcOffset: settings.utcOffset
 	}
 }
 
-const ConnectedPendingAlarm = ({ name, activeMoment }) => {
+const ConnectedPendingAlarm = ({ name, activeMoment, utcOffset }) => {
 	let activationDay = activeMoment.format('dd ')
-	activationDay = activationDay === moment().format('dd ') ? '' : activationDay;
+	activationDay = activationDay === moment().utcOffset(utcOffset).format('dd ') ? '' : activationDay;
 	return html`
 		<div className="alarm-pending">
 			<span className="alarm-name">${name}: </span>

@@ -1,15 +1,16 @@
 import html from "../../html.js";
 
-function formatSnoozeTime(snoozeUntil) {
-	let duration = moment.duration(snoozeUntil.diff(moment()));
+function formatSnoozeTime(snoozeUntil, utcOffset) {
+	let duration = moment.duration(snoozeUntil.diff(moment().utcOffset(utcOffset)));
 	return `${Math.floor(duration.asMinutes())}m ${duration.seconds()}s`;
 }
 
 // Test Alarm: 9m 10s
-const mapStateToProps = (state) => {
+const mapStateToProps = ({alarm, settings}) => {
 	return {
-		name: state.name,
-		snoozeUntil: moment.unix(state.activationTime)
+		name: alarm.name,
+		snoozeUntil: moment.unix(alarm.activationTime).utcOffset(settings.utcOffset),
+		utcOffset: settings.utcOffset
 	}
 }
 
@@ -19,7 +20,7 @@ class ConnectedSnoozingAlarm extends React.Component {
 		super(props)
 		this.tick = this.tick.bind(this);
 		this.state = {
-			snoozeTime: formatSnoozeTime(this.props.snoozeUntil)
+			snoozeTime: formatSnoozeTime(this.props.snoozeUntil, this.props.utcOffset)
 		}
 	}
 	componentDidMount() {
@@ -30,7 +31,7 @@ class ConnectedSnoozingAlarm extends React.Component {
 	}
 	tick() {
 		this.setState({
-			snoozeTime: formatSnoozeTime(this.props.snoozeUntil)
+			snoozeTime: formatSnoozeTime(this.props.snoozeUntil, this.props.utcOffset)
 		});
 	}
 	render() {

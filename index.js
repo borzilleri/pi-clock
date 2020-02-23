@@ -4,10 +4,10 @@ import camo from 'camo';
 import config from './src/config.js';
 import { app, server } from './src/server.js';
 
-import SocketManagerInit from './src/SocketManager.js';
-import JobManagerInit from './src/JobManager.js';
-import { init as SettingsInit } from './src/Settings.js';
-import ScreenManager from './src/ScreenManager.js';
+import { InitSocketManager } from './src/SocketManager.js';
+import { InitJobManager } from './src/JobManager.js';
+import { InitSettings } from './src/Settings.js';
+import { InitScreenManager } from './src/ScreenManager.js';
 
 import vendorApi from './src/vendor-api.js';
 import alarmsRouter from './src/AlarmsApi.js';
@@ -25,10 +25,10 @@ camo.connect(config.store.db_uri).then(db => {
 	database = db;
 }).then(() => {
 	// Initialize Modules
-	SettingsInit();
-	SocketManagerInit();
-	JobManagerInit();
-	ScreenManager.Init();
+	InitSettings();
+	InitSocketManager();
+	InitJobManager();
+	InitScreenManager();
 }).then(() => {
 	// Initialize our Express App.
 	app.use(express.json());
