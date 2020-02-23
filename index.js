@@ -53,3 +53,12 @@ camo.connect(config.store.db_uri).then(db => {
 	const port = config.server.port;
 	server.listen(port, () => console.log(`pi-cloock listening on port ${port}!`));
 });
+
+process.on('SIGTERM', () => {
+	console.info('SIGTERM signal received.');
+	console.log('Closing http server.');
+	server.close(() => {
+		console.log('Http server closed.');
+		process.exit(0);
+	});
+});
