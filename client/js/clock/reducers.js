@@ -5,6 +5,7 @@ const initialState = {
   name: "",
   status: STATUS_INACTIVE,
   activationTime: -1,
+  utcOffset: moment().utcOffset()
 };
 function rootReducer(state = initialState, action) {
   if (action.type === SET_STATE) {

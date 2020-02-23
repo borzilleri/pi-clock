@@ -1,12 +1,15 @@
 import html from "../../html.js";
 
-let clockFormat= 'HH:mm';
+let clockFormat = 'HH:mm';
 
-class Clock extends React.Component {
+const mapStateToProps = ({ utcOffset }) => {
+	return { utcOffset }
+}
+class ConnectedClock extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			time: moment().format(clockFormat)
+			time: moment().utcOffset(props.utcOffset).format(clockFormat)
 		}
 	}
 	componentDidMount() {
@@ -17,7 +20,7 @@ class Clock extends React.Component {
 	}
 	tick() {
 		this.setState({
-			time: moment().format(clockFormat)
+			time: moment().utcOffset(this.props.utcOffset).format(clockFormat)
 		});
 	}
 	render() {
@@ -28,4 +31,6 @@ class Clock extends React.Component {
 		`;
 	}
 }
+const Clock = ReactRedux.connect(mapStateToProps)(ConnectedClock);
+
 export default Clock;

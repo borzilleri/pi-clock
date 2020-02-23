@@ -1,7 +1,7 @@
 import { io } from "./server.js";
 import Events from "./EventBus.js";
 import { SET_STATE, REQUEST_STATE, ALARM_ACTIVATED } from "../client/js/action-types.js";
-
+import moment from 'moment';
 function messageHandler(msg) {
 	console.log("Socket message received", msg);
 	if (msg instanceof Object && msg.hasOwnProperty('type')) {
@@ -19,6 +19,7 @@ function connectionHandler(socket) {
 }
 
 function sendState(payload) {
+	payload['utcOffset'] = moment().utcOffset();
 	io.send({ type: SET_STATE, payload })
 }
 
