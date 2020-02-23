@@ -47,7 +47,7 @@ function activationHandler(job) {
 	_active_alarm = job;
 	_snooze_timeout_id = undefined;
 	AudioPlayer.PlayAudio(job.alarm.sound);
-	dispatchCurrentState();
+	Events.emit(ActionTypes.ALARM_ACTIVATED, getState());
 }
 
 function completionHanlder(job) {

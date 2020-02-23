@@ -1,6 +1,6 @@
 import { io } from "./server.js";
 import Events from "./EventBus.js";
-import { SET_STATE, REQUEST_STATE } from "../client/js/action-types.js";
+import { SET_STATE, REQUEST_STATE, ALARM_ACTIVATED } from "../client/js/action-types.js";
 
 function messageHandler(msg) {
 	console.log("Socket message received", msg);
@@ -24,5 +24,6 @@ function sendState(payload) {
 
 export default function init() {
 	Events.on(SET_STATE, sendState);
+	Events.on(ALARM_ACTIVATED, sendState);
 	io.on('connection', connectionHandler);
 }

@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { promises as fsp } from 'fs'
 import { spawn } from 'child_process';
 import findExec from 'find-exec';
 import config from './config.js';

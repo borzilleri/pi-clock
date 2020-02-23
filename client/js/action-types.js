@@ -18,6 +18,7 @@ export const SOUND_FETCH_REQUEST = "sounds/fetch/request";
 export const SOUND_FETCH_RESPONSE = "sounds/fetch/response";
 
 // These are used by the Clock App.
+export const ALARM_ACTIVATED = "alarm/activated";
 export const SET_STATE = 'init-state';
 export const SERVER_MESSAGE = 'server-message';
 export const ALARM_SNOOZE = 'alarm-snooze';

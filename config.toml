@@ -5,6 +5,11 @@
 	db_uri = "nedb:////Users/jonathan/Projects/pi-clock/data/piclock.db"
 	sounds_dir = "./data/sounds"
 
+[display]
+	enabled = true
+	#on_command = "xset -display :0 s reset"
+	on_command = "osascript -e 'display notification \"Screen Activated\" with title \"pi-clock\"'"
+
 [audio]
 	player = 'afplay'
 	extensions = ['.mp3', '.wav']
