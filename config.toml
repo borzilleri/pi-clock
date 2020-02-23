@@ -7,14 +7,12 @@
 
 [display]
 	enabled = true
-	#on_command = "xset -display :0 s reset"
 	on_command = "osascript -e 'display notification \"Screen Activated\" with title \"pi-clock\"'"
 
 [audio]
 	player = 'afplay'
 	player_args =[]
-	#player = 'omxplayer'
-	#player_args = ['--vol', '-1000', '--loop']
+	default_sound = 'Droplets'
 
 	extensions = ['.mp3', '.wav']
 # Should this even be a config?

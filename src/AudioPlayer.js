@@ -40,7 +40,7 @@ export function ListSounds() {
 }
 
 export function GetDefaultSound() {
-	return 'Droplets';
+	return config.audio.default_sound;
 }
 
 export function PlayAudio(soundName) {
