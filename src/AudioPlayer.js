@@ -6,6 +6,8 @@ import path from 'path';
 
 const SOUNDS_DIR = path.resolve(config.store.sounds_dir);
 const PLAYER_EXE = findExec(config.audio.player);
+const PLAYER_ARGS = config.audio.player_args;
+
 if (!PLAYER_EXE) {
 	throw new Error(`Unable to find player executable: ${config.audio.player}`)
 }
@@ -59,7 +61,7 @@ export function PlayAudio(soundName) {
 
 	currentSound = soundName;
 	let options = { stdio: 'ignore' }
-	let args = [sound_file];
+	let args = PLAYER_ARGS.concat([sound_file]);
 	process = spawn(PLAYER_EXE, args, options);
 	if (!process) {
 		throw new Error(`Unable to spawn process with player: ${PLAYER_EXE}`)

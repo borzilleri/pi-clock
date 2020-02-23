@@ -12,6 +12,10 @@
 
 [audio]
 	player = 'afplay'
+	player_args =[]
+	#player = 'omxplayer'
+	#player_args = ['--vol', '-1000', '--loop']
+
 	extensions = ['.mp3', '.wav']
 # Should this even be a config?
 	players = [
