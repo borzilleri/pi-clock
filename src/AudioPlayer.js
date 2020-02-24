@@ -62,7 +62,7 @@ export function PlayAudio(soundName) {
 	currentSound = soundName;
 	let options = { stdio: 'inherit' }
 	let args = PLAYER_ARGS.concat([sound_file]);
-	console.log("starting audio payer:", PLAYER_ARGS, args)
+	console.log("Starting Player:", PLAYER_ARGS, args)
 	process = spawn(PLAYER_EXE, args, options);
 	if (!process) {
 		throw new Error(`Unable to spawn process with player: ${PLAYER_EXE}`)
