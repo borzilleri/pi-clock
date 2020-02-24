@@ -19,9 +19,8 @@ body {
 }
 
 #status {
-	flex: none;
-	width: 100%;
-	font-size: 12vw;
+	width: 99%;
+	font-size: 7rem;
 	text-align: center;
 	font-family: Helvetica, sans-serif;
 }
@@ -58,19 +57,16 @@ body {
 }
 
 #clock {
-	width: 100%;
-	margin-left: -5vw;
-	font-size: 25vw;
+	width: 99%;
+	font-size: 18em;
 	text-align: right;
 	font-family: 'DSEG7Classic';
 	color: orangered;
 }
 
 #alarm {
-	flex: none;
-	width: 100%;
-	font-size: 8vw;
-	text-align: center;
+	width: 98%;
+	font-size: 4rem;
 	font-family: Helvetica, sans-serif;
 	color: orange;
 }
@@ -80,7 +76,7 @@ body {
 }
 
 .alarm-name {
-	flex: 1 1 59vw;
+	flex: 2 2 55vw;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: clip;
@@ -88,10 +84,10 @@ body {
 }
 .alarm-divider {
 	flex: 1 1 1vw;
-	margin: 0 2vw;
+	margin: 0 1vw;
 }
 .alarm-time {
-	flex: 1 1 40vw;
+	flex: 1 1 30vw;
 	white-space: nowrap;
 	text-align: left;
 }
