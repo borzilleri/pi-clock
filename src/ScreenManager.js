@@ -14,7 +14,8 @@ function activateScreen(activeState) {
 	if (!config.display.enabled) {
 		return;
 	}
-	console.log('screenactivated', config.display.on_command);
+	
+	console.log('screen activate:', config.display.on_command);
 
 	process = exec(config.display.on_command, closeHandler);
 	if (!process) {
