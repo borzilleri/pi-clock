@@ -37,7 +37,8 @@ class ConnectedSnoozingAlarm extends React.Component {
 	render() {
 		return html`
 		<div className="alarm-snoozing">
-			<span className="alarm-name">${this.props.name}: </span>
+			<span className="alarm-name">${this.props.name}</span>
+			<span className="alarm-divider">:</span>
 			<span className="alarm-time">${this.state.snoozeTime}</span>
 		</div>`;
 	}
