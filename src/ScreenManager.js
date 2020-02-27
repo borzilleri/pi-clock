@@ -17,8 +17,8 @@ function activateScreen(activeState) {
 	
 	console.log('Activating Screen:', config.display.on_command);
 
-	process = exec(config.display.on_command, closeHandler);
-	if (!process) {
+	let proc = exec(config.display.on_command, closeHandler);
+	if (!proc) {
 		throw new Error(`Unable to spawn process: ${CMD_EXE}`)
 	}
 }

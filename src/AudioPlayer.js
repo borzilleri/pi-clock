@@ -24,13 +24,13 @@ const SOUND_FILES = Object.fromEntries(fs.readdirSync(SOUNDS_DIR, { withFileType
 	}));
 
 let currentSound;
-let process;
+let player_proc;
 
 function closeHandler(err) {
 	if (err) {
 		console.log(`Error in audio player ${PLAYER_EXE}:`, err)
 	}
-	else if (!process.killed) {
+	else if (!player_proc.killed) {
 		PlayAudio(currentSound);
 	}
 }
@@ -55,23 +55,23 @@ export function PlayAudio(soundName) {
 	let sound_file = SOUND_FILES[soundName];
 
 	// If we're already playing a sound, stop it.
-	if (process) {
-		process.kill();
+	if (player_proc) {
+		player_proc.kill();
 	}
 
 	currentSound = soundName;
 	let options = { stdio: 'inherit' }
 	let args = PLAYER_ARGS.concat([sound_file]);
 	console.log("Starting Player:", PLAYER_ARGS, args)
-	process = spawn(PLAYER_EXE, args, options);
-	if (!process) {
+	player_proc = spawn(PLAYER_EXE, args, options);
+	if (!player_proc) {
 		throw new Error(`Unable to spawn process with player: ${PLAYER_EXE}`)
 	}
-	process.on('close', closeHandler);
+	player_proc.on('close', closeHandler);
 }
 
 export function StopAudio() {
-	if (process) {
-		process.kill();
+	if (player_proc) {
+		player_proc.kill();
 	}
 }

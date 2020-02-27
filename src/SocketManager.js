@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { io } from "./server.js";
 import Events from "./EventBus.js";
 import { SET_STATE, STATE_REQUEST, ALARM_ACTIVATED, SETTINGS_SET } from "../client/js/action-types.js";
@@ -14,9 +13,14 @@ function messageHandler(msg) {
 	}
 }
 
+function errorHandler(err) {
+	console.log("socket.io error", err);
+}
+
 function connectionHandler(socket) {
 	console.log("Client connected.");
 	socket.on('message', messageHandler);
+	socket.on('error', errorHandler);
 	io.send({ type: SETTINGS_SET, payload: Settings.clientSettings() });
 	Events.emit(STATE_REQUEST);
 }
