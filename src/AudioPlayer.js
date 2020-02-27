@@ -74,7 +74,7 @@ export function PlayAudio(soundName) {
 export function StopAudio() {
 	console.log("StopAudio called.");
 	if (player_proc) {
-		console.log("Killing audio process:", player_proc);
+		console.log("Killing audio process:", player_proc.pid);
 		player_proc.kill();
 	}
 }
