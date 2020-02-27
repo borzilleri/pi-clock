@@ -9,12 +9,14 @@ let router = expressAwait.decorateRouter(express.Router());
 router.postAsync('/snooze', async (req, res) => {
 	Events.emit(ALARM_SNOOZE);
 	res.status(204);
+	next();
 });
 
 // Stop Active Alarm
 router.postAsync('/stop', async (req, res) => {
 	Events.emit(ALARM_STOP);
 	res.status(204);
+	next();
 });
 
 router.use((err, req, res, next) => {
