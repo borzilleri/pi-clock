@@ -24,7 +24,7 @@ class SettingsWrapper {
 	 * @returns {moment.Duration}
 	 */
 	get snooze_duration() {
-		return moment.duration(settingsObj.snooze_duration);
+		return moment.duration(settingsObj.snooze_duration, 'minutes');
 	}
 
 	clientSettings() {
