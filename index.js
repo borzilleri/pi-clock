@@ -2,7 +2,7 @@ import express from 'express';
 import camo from 'camo';
 
 import config from './src/config.js';
-import { app, server } from './src/server.js';
+import { app, server, io } from './src/server.js';
 
 import { InitSocketManager } from './src/SocketManager.js';
 import { InitJobManager } from './src/JobManager.js';
@@ -56,6 +56,8 @@ camo.connect(config.store.db_uri).then(db => {
 
 process.on('SIGTERM', () => {
 	console.info('SIGTERM signal received.');
+	console.log("Disconnecting sockets.");
+	io.close();
 	console.log('Closing http server.');
 	server.close(() => {
 		console.log('Http server closed.');
