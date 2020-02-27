@@ -15,10 +15,7 @@ const ConnectedPendingAlarm = ({ name, activeMoment, utcOffset }) => {
 	activationDay = activationDay === moment().utcOffset(utcOffset).format('dd ') ? '' : activationDay;
 	return html`
 		<div className="alarm-with-time">
-			<span className="alarm-time">
-				${activationDay}${activeMoment.format(activationTimeFormat)}: 
-			</span>
-			<span className="alarm-name">${name}</span>
+			${activationDay}${activeMoment.format(activationTimeFormat)}: ${name}
 		</div>`;
 }
 

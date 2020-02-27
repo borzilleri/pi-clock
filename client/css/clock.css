@@ -81,14 +81,6 @@ body {
 
 .alarm-with-time {
 	width: 100%;
-	display: flex;
-}
-.alarm-time {
-	flex: 1 1 35vw;
-	text-align: right;
-}
-.alarm-name {
-	flex: 1 1 60vw;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: clip;
