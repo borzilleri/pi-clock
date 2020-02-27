@@ -31,6 +31,7 @@ function closeHandler(err) {
 		console.log(`Error in audio player ${PLAYER_EXE}:`, err)
 	}
 	else if (!player_proc.killed) {
+		console.log("Audio player stopped, but not killed, restarting with sound:", currentSound);
 		PlayAudio(currentSound);
 	}
 }
