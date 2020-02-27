@@ -10,9 +10,7 @@ const mapStateToProps = ({alarm}) => {
 class ConnectedActiveAlarm extends React.Component {
 	render() {
 		return html`
-		<div className="alarm-pending">
-			<span className="alarm-name">${this.props.name}</span>
-		</div>`;
+		<div className="alarm-name-only">${this.props.name}</div>`;
 	}
 }
 

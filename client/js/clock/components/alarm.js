@@ -14,7 +14,7 @@ const mapStateToProps = ({alarm}) => {
 
 class InactiveAlarm extends React.Component {
 	render() {
-		return html`<div className="alarm-inactive">No Alarms</div>`;
+		return html`<div className="alarm-name-only">No Alarms</div>`;
 	}
 }
 
