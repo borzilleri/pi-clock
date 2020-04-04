@@ -36,13 +36,14 @@ const mapStateToSoundSelectProps = (state) => {
 	}
 }
 const ConnectedSoundSelect = ({ selected, onChange, ...props }) => {
+	let options = props.sounds.map(s => html`<option key=${s}>${s}</option>`);
+	let defaultValue = selected ? selected : "Default";
 	return html`
 		<div className="form-group">
 			<label htmlFor="alarm-sound">Sound</label>
-			<select id="alarm-sound" className="form-control" onChange=${onChange} defaultValue=${selected}>
-				${props.sounds.map(sound => 
-					html`<option key=${sound}>${sound}</option>`
-				)}
+			<select id="alarm-sound" className="form-control" onChange=${onChange} defaultValue=${defaultValue}>
+				<option key="no-sound" disabled>Default</option>
+				${options}
 			</select>
 		</div>
 	`;

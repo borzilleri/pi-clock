@@ -1,9 +1,9 @@
 //@ts-check
 import { ALARM_EDIT, ALARM_SAVE_REQUEST, ALARM_LIST_REQUEST, ALARM_DELETE_REQUEST, MODAL_CLOSE, SOUND_FETCH_REQUEST } from '../action-types.js';
 
-const newAlarm = {
+const defaultAlarmData = {
 	name: "New Alarm",
-	sound: "Droplets",
+	sound: null,
 	hour: 12,
 	minute: 12,
 	enabled: true,
@@ -13,7 +13,7 @@ const newAlarm = {
 /**
  * @param {Object} payload Alarm object to edit. 
  */
-export function editAlarm(payload = newAlarm) {
+export function editAlarm(payload = defaultAlarmData) {
 	return {
 		type: ALARM_EDIT,
 		payload

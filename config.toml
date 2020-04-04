@@ -5,27 +5,11 @@
 	db_uri = "nedb:////Users/jonathan/Projects/pi-clock/data/piclock.db"
 	sounds_dir = "./data/sounds"
 
-[display]
-	enabled = true
-	on_command = "osascript -e 'display notification \"Screen Activated\" with title \"pi-clock\"'"
-
+[alarm]
+	module = 'macOS'
+	
 [audio]
-	player = 'afplay'
-	player_args =[]
-	default_sound = 'Droplets'
-
 	extensions = ['.mp3', '.wav']
-# Should this even be a config?
-	players = [
-		'mplayer',
-		'afplay',
-		'mpg123',
-		'mpg321',
-		'play',
-		'omxplayer',
-		'aplay',
-		'cmdmp3'
-	]
 
 # A kind of hacky whitelist of valid vendor libraries to send to clients.
 # These are files that can be loaded via a `/vendors/some_file` endpoint.

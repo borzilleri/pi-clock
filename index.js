@@ -8,6 +8,7 @@ import { InitSocketManager } from './src/SocketManager.js';
 import { InitJobManager } from './src/JobManager.js';
 import { InitSettings } from './src/Settings.js';
 import { InitScreenManager } from './src/ScreenManager.js';
+import { InitAudioPlayer } from './src/AudioPlayer.js';
 
 import vendorApi from './src/vendor-api.js';
 import alarmsRouter from './src/AlarmsApi.js';
@@ -29,6 +30,7 @@ camo.connect(config.store.db_uri).then(db => {
 	InitSocketManager();
 	InitJobManager();
 	InitScreenManager();
+	InitAudioPlayer();
 }).then(() => {
 	// Initialize our Express App.
 	app.use(express.json());

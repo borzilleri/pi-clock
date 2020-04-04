@@ -19,8 +19,7 @@ function createReducer(initialState, handlers) {
 
 // Sounds Reducer
 const soundInitialState = {
-	sounds: ['Droplets'],
-	default: 'Droplets'
+	sounds: []
 }
 function setSounds(soundState, action) {
 	return action.payload;

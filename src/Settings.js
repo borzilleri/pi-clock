@@ -8,11 +8,25 @@ class LocalSettings extends camo.Document {
 	 */
 	snooze_duration;
 
+	/**
+	 * @type {String}
+	 */
+	default_sound;
+
 	constructor() {
 		super();
 		this.snooze_duration = {
 			type: Number,
 			default: 9
+		}
+		this.default_sound = {
+			type: String
+		}
+		this.volume = {
+			type: Number,
+			min: 0,
+			max: 100,
+			default: 75
 		}
 	}
 }
@@ -25,6 +39,14 @@ class SettingsWrapper {
 	 */
 	get snooze_duration() {
 		return moment.duration(settingsObj.snooze_duration, 'minutes');
+	}
+
+	get default_sound() {
+		return settingsObj.default_sound;
+	}
+
+	get volume() {
+		return settingsObj.volume;
 	}
 
 	clientSettings() {

@@ -3,26 +3,19 @@ import config from './config.js';
 import { exec } from 'child_process';
 import { ALARM_ACTIVATED } from '../client/js/action-types.js';
 
-
-function closeHandler(err) {
-	if (err) {
-		console.log(`Error activating screen.`, err)
-	}
-}
+import Module from './modules/Module.js';
+/**
+ * @type {Module}
+ */
+let screenModule;
 
 function activateScreen(activeState) {
-	if (!config.display.enabled) {
-		return;
-	}
-	
-	console.log('Activating Screen:', config.display.on_command);
-
-	let proc = exec(config.display.on_command, closeHandler);
-	if (!proc) {
-		throw new Error(`Unable to spawn process: ${CMD_EXE}`)
-	}
+	console.log('Activating Screen');
+	screenModule.activateScreen();
 }
 
 export function InitScreenManager() {
+	let modulePath = `./modules/${config.alarm.module}.js`;
+	import(modulePath).then(loadedModule => screenModule = loadedModule.default);
 	Events.on(ALARM_ACTIVATED, activateScreen);
 }

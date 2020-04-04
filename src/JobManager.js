@@ -65,6 +65,7 @@ async function stopActive() {
 			removeAlarmJob(activeId);
 		}
 		_active_alarm = undefined;
+		JOBS = JOBS.sort(jobComparator(true));
 	}
 	if (_snooze_timeout_id) {
 		clearTimeout(_snooze_timeout_id);

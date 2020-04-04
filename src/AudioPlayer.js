@@ -1,39 +1,76 @@
+//@ts-check
 import fs from 'fs';
-import { spawn } from 'child_process';
-import findExec from 'find-exec';
-import config from './config.js';
 import path from 'path';
+import config from './config.js';
+import Settings from './Settings.js';
+let fsp = fs.promises;
+
+import Module from './modules/Module.js';
+/**
+ * @type {Module}
+ */
+let audioModule;
+
 
 const SOUNDS_DIR = path.resolve(config.store.sounds_dir);
-const PLAYER_EXE = findExec(config.audio.player);
-const PLAYER_ARGS = config.audio.player_args;
+const SOUND_FILES = loadSoundFiles();
 
-if (!PLAYER_EXE) {
-	throw new Error(`Unable to find player executable: ${config.audio.player}`)
+function loadSoundFiles() {
+	// @ts-ignore
+	return Object.fromEntries(fs.readdirSync(SOUNDS_DIR, { withFileTypes: true })
+		.filter(f => f.isFile())
+		.filter(f => {
+			let ext = path.extname(f.name);
+			return ext && ext !== f.name &&
+				config.audio.extensions.includes(ext)
+		})
+		.map(fd => {
+			let f = path.parse(fd.name);
+			return [f.name, path.resolve(SOUNDS_DIR, fd.name)]
+		}));
 }
-const SOUND_FILES = Object.fromEntries(fs.readdirSync(SOUNDS_DIR, { withFileTypes: true })
-	.filter(f => f.isFile())
-	.filter(f => {
-		let ext = path.extname(f.name);
-		return ext && ext !== f.name &&
-			config.audio.extensions.includes(ext)
-	})
-	.map(fd => {
-		let f = path.parse(fd.name);
-		return [f.name, path.resolve(SOUNDS_DIR, fd.name)]
-	}));
 
-let currentSound;
-let player_proc;
+/**
+ * Retrieve the file path for the given sound name from our known sounds map.
+ * 
+ * @param {String} soundName 
+ */
+async function getSoundFile(soundName) {
+	console.log("Retrieving sound: ", soundName)
+	if (soundName && SOUND_FILES.hasOwnProperty(soundName)) {
+		let filePath = SOUND_FILES[soundName];
+		console.log("Located sound file path: ", filePath)
+		return fsp.access(filePath, fs.constants.R_OK)
+			.then(() => {
+				console.log("File path exists: ", filePath);
+				return filePath;
+			})
+			.catch(() => {
+				console.log("File path not accessible: ", filePath);
+				return null
+			});
+	}
+	console.log("No sound known by name: ", soundName);
+	return null;
+}
 
-function closeHandler(err) {
-	if (err) {
-		console.log(`Error in audio player ${PLAYER_EXE}:`, err)
+/**
+ * Resolve the sound with the given name.
+ * 
+ * @param {String} soundName 
+ */
+async function resolveSound(soundName) {
+	// Check to see if we know about the requested file
+	// and that it exists
+	let filePath = await getSoundFile(soundName);
+	if (filePath) {
+		console.log(`Found ${soundName} : ${filePath}`);
+		return filePath;
 	}
-	else if (!player_proc.killed) {
-		console.log("Audio player stopped, but not killed, restarting with sound:", currentSound);
-		PlayAudio(currentSound);
-	}
+	console.log("Loading default sound.");
+	// If not, check the default sound, ensure it exists.
+	filePath = await getSoundFile(Settings.default_sound);
+	return filePath;
 }
 
 export function ListSounds() {
@@ -44,37 +81,17 @@ export function GetDefaultSound() {
 	return config.audio.default_sound;
 }
 
-export function PlayAudio(soundName) {
-	// Ensure we were passed a sound file.
-	if (!soundName) {
-		throw new Error("No audio file specified");
-	}
-	// Ensure it's one we know about.
-	if (!SOUND_FILES.hasOwnProperty(soundName)) {
-		throw new Error(`Unknown sound file specified: ${soundName}`)
-	}
-	let sound_file = SOUND_FILES[soundName];
-
-	// If we're already playing a sound, stop it.
-	if (player_proc) {
-		player_proc.kill();
-	}
-
-	currentSound = soundName;
-	let options = { stdio: 'inherit' }
-	let args = PLAYER_ARGS.concat([sound_file]);
-	console.log("Starting Player:", PLAYER_ARGS, args)
-	player_proc = spawn(PLAYER_EXE, args, options);
-	if (!player_proc) {
-		throw new Error(`Unable to spawn process with player: ${PLAYER_EXE}`)
-	}
-	player_proc.on('close', closeHandler);
+export async function PlayAudio(soundName) {
+	let filePath = await resolveSound(soundName);
+	audioModule.playAudioFile(filePath);
 }
 
 export function StopAudio() {
 	console.log("StopAudio called.");
-	if (player_proc) {
-		console.log("Killing audio process:", player_proc.pid);
-		player_proc.kill();
-	}
+	audioModule.stopAudio();
+}
+
+export function InitAudioPlayer() {
+	let modulePath = `./modules/${config.alarm.module}.js`;
+	import(modulePath).then(loadedModule => audioModule = loadedModule.default);
 }
