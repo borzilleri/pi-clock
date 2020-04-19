@@ -38,7 +38,7 @@ function playAudioFile(fileName) {
 }
 
 function turnOnScreen() {
-	let cmd = "xset -display: 0 s reset";
+	let cmd = "xset -display :0 s reset";
 	let p = exec(cmd, (err) => {
 		if (err) {
 			console.error("Error activating screen: ", err);
