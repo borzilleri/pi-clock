@@ -12,6 +12,7 @@ const FILE_MAP = {
 	'redux-saga.js': "redux-saga/dist/redux-saga-core.esmodules-browsers.js",
 	'redux-saga-effects.js': "redux-saga/dist/redux-saga-effects.esmodules-browsers.js",
 	'moment.js': "moment/moment.js",
+	'moment-timezone.js': "moment-timezone/moment-timezone.js",
 	'htm.mjs': "htm/dist/htm.mjs",
 	'htm-react.mjs': "htm/react/index.mjs",
 	'socket.io.js': "socket.io-client/dist/socket.io.js",

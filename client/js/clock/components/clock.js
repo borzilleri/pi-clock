@@ -3,13 +3,13 @@ import html from "../../html.js";
 let clockFormat = 'HH:mm';
 
 const mapStateToProps = ({ settings }) => {
-	return { utcOffset: settings.utcOffset }
+	return { timeZone: settings.timeZone }
 }
 class ConnectedClock extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			time: moment().utcOffset(props.utcOffset).format(clockFormat)
+			time: moment().tz(props.timeZone).format(clockFormat)
 		}
 	}
 	componentDidMount() {
@@ -20,7 +20,7 @@ class ConnectedClock extends React.Component {
 	}
 	tick() {
 		this.setState({
-			time: moment().utcOffset(this.props.utcOffset).format(clockFormat)
+			time: moment().tz(this.props.timeZone).format(clockFormat)
 		});
 	}
 	render() {

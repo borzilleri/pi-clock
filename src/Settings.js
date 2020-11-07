@@ -32,7 +32,7 @@ class LocalSettings extends camo.Document {
 }
 
 class SettingsWrapper {
-	utcOffset = moment().utcOffset();
+	timeZone = "America/Los_Angeles";
 
 	/**
 	 * @returns {moment.Duration}
@@ -51,7 +51,7 @@ class SettingsWrapper {
 
 	clientSettings() {
 		return {
-			utcOffset: this.utcOffset
+			timeZone: this.timeZone
 		}
 	}
 }

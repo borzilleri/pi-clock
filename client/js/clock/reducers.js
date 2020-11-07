@@ -9,7 +9,7 @@ const initialState = {
     activationTime: -1
   },
   settings: {
-    utcOffset: 0
+    timeZone: "UTC"
   }
 };
 

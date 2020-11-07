@@ -1,7 +1,7 @@
 import html from "../../html.js";
 
-function formatSnoozeTime(snoozeUntil, utcOffset) {
-	let duration = moment.duration(snoozeUntil.diff(moment().utcOffset(utcOffset)));
+function formatSnoozeTime(snoozeUntil, timeZone) {
+	let duration = moment.duration(snoozeUntil.diff(moment().tz(timeZone)));
 	return `${Math.floor(duration.asMinutes())}m ${duration.seconds()}s`;
 }
 
@@ -9,8 +9,8 @@ function formatSnoozeTime(snoozeUntil, utcOffset) {
 const mapStateToProps = ({alarm, settings}) => {
 	return {
 		name: alarm.name,
-		snoozeUntil: moment.unix(alarm.activationTime).utcOffset(settings.utcOffset),
-		utcOffset: settings.utcOffset
+		snoozeUntil: moment.unix(alarm.activationTime).tz(settings.timeZone),
+		timeZone: settings.timeZone
 	}
 }
 
@@ -20,7 +20,7 @@ class ConnectedSnoozingAlarm extends React.Component {
 		super(props)
 		this.tick = this.tick.bind(this);
 		this.state = {
-			snoozeTime: formatSnoozeTime(this.props.snoozeUntil, this.props.utcOffset)
+			snoozeTime: formatSnoozeTime(this.props.snoozeUntil, this.props.timeZone)
 		}
 	}
 	componentDidMount() {
@@ -31,7 +31,7 @@ class ConnectedSnoozingAlarm extends React.Component {
 	}
 	tick() {
 		this.setState({
-			snoozeTime: formatSnoozeTime(this.props.snoozeUntil, this.props.utcOffset)
+			snoozeTime: formatSnoozeTime(this.props.snoozeUntil, this.props.timeZone)
 		});
 	}
 	render() {
