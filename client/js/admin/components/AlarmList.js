@@ -34,7 +34,7 @@ class ConnectedAlarmRow extends React.Component {
 		return html`
 		<tr>
 			<td>${this.props.alarm.name}</td>
-			<td>${moment({ hour: this.props.alarm.hour, minute: this.props.alarm.minute }).format('HH:mm')}</td>
+			<td>${moment({ hour: this.props.alarm.hour, minute: this.props.alarm.minute }).format('hh:mm A')}</td>
 			<td>${this.formatDays()}</td>
 			<td><${ToggleCheckbox} id=${this.props.alarm._id} onChange=${this.toggleEnabled} 
 				defaultChecked=${this.props.alarm.enabled}/></td>
