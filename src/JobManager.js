@@ -50,10 +50,6 @@ function activationHandler(job) {
 	Events.emit(ActionTypes.ALARM_ACTIVATED, getState());
 }
 
-function completionHanlder(job) {
-	console.log(`Completion handler for job: ${job.id}`);
-}
-
 async function stopActive() {
 	AudioPlayer.StopAudio();
 	if (_active_alarm) {
@@ -121,7 +117,7 @@ function getState() {
 		let job = JOBS[0];
 		state.name = job.name;
 		state.status = Constants.STATUS_PENDING;
-		state.activationTime = job.nextActivation;
+		state.activationTime = job.nextActivation.unix();
 	}
 	else {
 		state.status = Constants.STATUS_INACTIVE;
@@ -143,12 +139,12 @@ function updateAlarmJob(alarm) {
 
 	let update = false;
 	if (!job && alarm.enabled) {
-		console.log("creating new job");
+		console.log("Creating new job");
 		JOBS.push(new Job(alarm));
 		update = true;
 	}
 	else if (job) {
-		console.log("updating job.");
+		console.log("Updating existing job.");
 		job.update(alarm);
 		update = true;
 	}
@@ -171,10 +167,11 @@ function removeAlarmJob(alarmId) {
 }
 
 async function loadAllJobs() {
-	await Alarm.find({}).then(list => {
-		JOBS = list.filter(a => a.enabled).map(alarm => new Job(alarm)).sort(jobComparator(true));
-	})
-	console.log(`Loaded ${JOBS.length} jobs.`)
+	JOBS = await Alarm.find({})
+		.then(list => {
+			return list.filter(a => a.enabled).map(alarm => new Job(alarm)).sort(jobComparator(true));
+		});
+	console.log(`Loaded ${JOBS.length} jobs.`);
 	dispatchCurrentState();
 }
 
@@ -187,7 +184,6 @@ export async function InitJobManager() {
 
 	Events.on(ActionTypes.STATE_REQUEST, dispatchCurrentState);
 	Events.on(ActionTypes.ALARM_JOB_ACTIVATED, activationHandler);
-	Events.on(ActionTypes.ALARM_JOB_COMPLETED, completionHanlder);
 
 	return await loadAllJobs();
 }
