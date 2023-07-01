@@ -89,24 +89,34 @@ class Job {
 	 * @param {@Alarm}
 	 */
 	calculateNextActivation() {
-		// Set the time component of the next activation.
-		let next = moment().set({ "hour": this.alarm.hour, "minute": this.alarm.minute, "second": 0 });
+		// This is hella silly.
+		// Our data is Sunday first, 0-indexed.
+		// iso day of week is Monday first, 1-indexed.
+		// This corrects the sunday value, which is the only different one.
+		let isoWeekdays = this.alarm.weekDays.map(d => d || 7);
 
-		// That time is after now, it's our next activation.
-		if (next.isAfter()) {
+		// Initialize our start time
+		let skipUntil = this.alarm.skipUntil ? moment.unix(this.alarm.skipUntil) : moment();
+		let next = moment(skipUntil)
+
+		// Set the time component properly.
+		next.set({ "hour": this.alarm.hour, "minute": this.alarm.minute, "second": 0 });
+
+		let today = next.isoWeekday();
+
+		// Our activation is on the right day, and after now.
+		if (next.isAfter() && (isoWeekdays.length == 0 || isoWeekdays.includes(today))) {
 			return next;
 		}
 
 		// Otherwise, we need to find the "next" activation of this.
 		// First, find the next day-of-week that the alarm should go off.
-		let today = moment().isoWeekday();
 		let nextDay = (() => {
 			// If our weekdays array is empty, we're a one-off, and our next activation is tomorrow.
 			if (this.alarm.weekDays.length == 0) {
 				return moment().add(1, 'day').isoWeekday();
 			}
-
-			for (let i = 1; i++; i <= 7) {
+			for (let i = 0; i < 7; i++) {
 				let day = (today + i) % 7;
 				if (this.alarm.weekDays.includes(day)) {
 					return day;
@@ -116,13 +126,12 @@ class Job {
 		// We know our next activation should be on that day, so set our activation to it.
 		next.isoWeekday(nextDay);
 
-		// If the next day is after today, it's later in the current week, so we're good to go.
-		if (nextDay > today) {
-			return next;
-		} else {
-			// Otherwise, add a week, and we're good.
-			return next.add(1, 'weeks');
+		// If the next day is before our skip threshold (which may be just now),
+		// it ended up earlier in the week, and we need to bump it forward by one week.
+		if ( next.isBefore(skipUntil) ) {
+			next.add(1, 'weeks');
 		}
+		return next;
 	}
 }
 

@@ -25,6 +25,10 @@ export default class Alarm extends camo.Document {
 	 * @type {Array[Number]}
 	 */
 	weekDays;
+	/**
+	 * @type {Number}
+	 */
+	skipUntil;
 
 	constructor() {
 		super();
@@ -55,6 +59,10 @@ export default class Alarm extends camo.Document {
 			min: 0,
 			max: 6
 		};
+		this.skipUntil = {
+			type: Number,
+			default: null
+		}
 	}
 	get recurring() {
 		return this.weekDays.length > 0;
@@ -66,6 +74,7 @@ export default class Alarm extends camo.Document {
 	hasDifferentSchedule(other) {
 		return other.hour != this.hour ||
 			other.minute != this.minute ||
-			other.weekDays.sort().join() != this.weekDays.sort().join();
+			other.weekDays.sort().join() != this.weekDays.sort().join() ||
+			other.skipUntil != this.skipUntil;
 	}
 }

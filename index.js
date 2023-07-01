@@ -42,7 +42,7 @@ camo.connect(config.store.db_uri).then(db => {
 		res.sendFile('./client/admin.html', { root: __dirname }, next);
 	})
 
-	app.use('/alarms', alarmsRouter);
+	app.use('/api/alarms', alarmsRouter);
 	app.use('/active', activeRouter);
 	app.use('/sounds', soundsRouter);
 	app.use('/vendor', vendorApi);

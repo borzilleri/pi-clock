@@ -1,5 +1,5 @@
 
-const URI_BASE = '/alarms';
+const URI_BASE = '/api/alarms';
 
 /**
  * @param {String} id 
