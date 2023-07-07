@@ -1,0 +1,10 @@
+[Unit]
+Description=Raspberry Pi Alarm Clock
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/path/to/node /opt/pi-clock/index.js
+
+[Install]
+WantedBy=multi-user.target
