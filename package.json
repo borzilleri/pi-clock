@@ -9,6 +9,9 @@
   },
   "author": "Jonathan Borzilleri <jonathan@borzilleri.net>",
   "license": "MIT",
+  "engines" : { 
+    "node" : ">=18.16.1"
+  },
   "dependencies": {
     "@awaitjs/express": "^0.4.0",
     "camo": "^0.12.3",
