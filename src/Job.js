@@ -94,21 +94,28 @@ class Job {
 		// This corrects the sunday value, which is the only different one.
 		let isoWeekdays = this.alarm.weekDays.map(d => d || 7);
 
-		// Initialize our start time
+		// If this alarm is set to be skipped until a date, calculate that.
+		// Be sure the configured date is both set, and not in the past.
 		let skipUntil = this.alarm.skipUntil ? moment.unix(this.alarm.skipUntil) : moment();
-		let next = moment(skipUntil)
+		if (skipUntil.isBefore()) {
+			skipUntil = moment();
+		}
 
-		// Set the time component properly.
+		// Initialize our 'next' activation time to our skip until start time,
+		// which may just be "now"
+		let next = moment(skipUntil);
+
+		// Set the time component of our next activation based on the alarm.
 		next.set({ "hour": this.alarm.hour, "minute": this.alarm.minute, "second": 0 });
 
 		let today = next.isoWeekday();
 
-		// Our activation is on the right day, and after now.
+		// Our next activation is today and in the future, so we can just return it.
 		if (next.isAfter() && (isoWeekdays.length == 0 || isoWeekdays.includes(today))) {
 			return next;
 		}
 
-		// Otherwise, we need to find the "next" activation of this.
+		// Otherwise, we need to find the "next" day this activates
 		// First, find the next day-of-week that the alarm should go off.
 		let nextDay = (() => {
 			// If our weekdays array is empty, we're a one-off, and our next activation is tomorrow.
