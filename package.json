@@ -9,26 +9,26 @@
   },
   "author": "Jonathan Borzilleri <jonathan@borzilleri.net>",
   "license": "MIT",
-  "engines" : { 
-    "node" : ">=18.16.1"
+  "engines": {
+    "node": ">=18.16.1"
   },
   "dependencies": {
-    "@awaitjs/express": "^0.4.0",
-    "camo": "^0.12.3",
-    "express": "^4.17.1",
-    "express-validator": "^6.3.1",
-    "find-exec": "^1.0.1",
-    "htm": "^2.2.1",
-    "moment": "^2.24.0",
-    "moment-timezone": "^0.5.31",
+    "@awaitjs/express": "^0.9.0",
+    "camo": "^0.12",
+    "express": "^4.0",
+    "express-validator": "^7.0",
+    "find-exec": "^1.0",
+    "htm": "^3.0",
+    "moment": "^2.0",
+    "moment-timezone": "^0.5.0",
     "nedb": "^1.8.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-redux": "^7.1.3",
-    "redux": "^4.0.5",
-    "redux-saga": "^1.1.3",
-    "socket.io": "^2.3.0",
-    "toml": "^3.0.0"
+    "react": "^16.0",
+    "react-dom": "^16.0",
+    "react-redux": "^8.0",
+    "redux": "^4.0",
+    "redux-saga": "^1.0",
+    "socket.io": "^4.0",
+    "toml": "^3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.1"
