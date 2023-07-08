@@ -3,8 +3,8 @@ import path from 'path';
 
 const NODE_MODULES_ROOT = path.resolve('node_modules')
 const FILE_MAP = {
-	'io-d47abd80.js': "redux-saga/dist/io-d47abd80.js",
-	'io-f9ca3938.js': "redux-saga/dist/io-f9ca3938.js",
+	'io-3ad0e761.js': "redux-saga/dist/io-3ad0e761.js",
+	'io-3f0849c3.js': "redux-saga/dist/io-3f0849c3.js",
 	'react.js': "react/umd/react.development.js",
 	'react-dom.js': "react-dom/umd/react-dom.development.js",
 	'redux.js': "redux/dist/redux.js",
@@ -15,7 +15,7 @@ const FILE_MAP = {
 	'moment-timezone.js': "moment-timezone/moment-timezone.js",
 	'htm.mjs': "htm/dist/htm.mjs",
 	'htm-react.mjs': "htm/react/index.mjs",
-	'socket.io.js': "socket.io-client/dist/socket.io.js",
+	'socket.io.js': "socket.io/client-dist/socket.io.js",
 }
 
 let vendorApi = express.Router();

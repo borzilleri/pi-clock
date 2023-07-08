@@ -3,14 +3,7 @@ import { actionChannel, all, take, call, put } from "/vendor/redux-saga-effects.
 import * as ActionTypes from '../action-types.js';
 
 let socket;
-const connect = () => {
-	socket = io();
-	return new Promise(resolve => {
-		socket.on('connect', () => {
-			resolve(socket);
-		})
-	})
-}
+
 const createSocketChannel = (socket) => eventChannel(emit => {
 	const handler = (data) => emit(data);
 	socket.on('message', handler);
@@ -23,7 +16,7 @@ const createSocketChannel = (socket) => eventChannel(emit => {
  * Listens to events from the server and puts them.
  */
 function* serverListenerSaga() {
-	socket = yield call(connect);
+	socket = io();
 	const socketChannel = yield call(createSocketChannel, socket);
 	while (true) {
 		const action = yield take(socketChannel);
