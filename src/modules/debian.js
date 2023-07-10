@@ -3,16 +3,11 @@ import { exec, spawn } from 'child_process';
 import Module from './Module.js';
 import Settings from '../Settings.js';
 
-const AUDIO_PLAYER_EXE = '/usr/bin/omxplayer.bin';
-const AUDIO_PLAYER_ARGS = ['--loop']
+const AUDIO_PLAYER_EXE = '/usr/bin/cvlc';
+const AUDIO_PLAYER_ARGS = ['--repeat', '-q']
 
 let currentSound;
 let audio_proc;
-
-function calculateVolume() {
-	let volPct = Settings.volume / 100;
-	return (6000 * volPct) - 6000;
-}
 
 function audioCloseHandler(err) {
 	if (err) {
@@ -26,7 +21,7 @@ function audioCloseHandler(err) {
 
 function playAudioFile(fileName) {
 	let options = { stdio: 'inherit' }
-	let args = AUDIO_PLAYER_ARGS.concat(['--vol', calculateVolume(), fileName]);
+	let args = AUDIO_PLAYER_ARGS.concat([fileName]);
 
 	console.log("Starting Player: ", AUDIO_PLAYER_EXE, args)
 	// @ts-ignore
