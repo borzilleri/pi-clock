@@ -1,1 +1,4 @@
+xset -dpms
+xset blank
+xset 30 30
 exec chromium-browser --noerrordialogs --disable-infobars --kiosk "http://localhost:3000"
