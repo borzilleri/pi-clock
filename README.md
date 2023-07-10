@@ -1,24 +1,46 @@
 # pi-clock
 Alarm Clock for a Raspberry Pi Kiosk
 
+## Features
 
-## pi setup
+* Web UI (at `/admin`) to configure alarms.
+* Multiple alarms can be configured.
+* Alarms may be be set to repeat on configurable weekdays.
+* Alarms may be set to be skipped until a given date.
+* Display turns off after 30s, wakes with touch (or when an alarm goes off).
+
+## Requirements and setup
+
+This was designed to run on a Raspberry Pi 3B+. It should be able to run on
+other pi models, but adjustments to packages used may need to be made, and
+compatibility is not guaranteed.
+
+This expects a display to be available on `:0`, and an audio device connected
+via the 1/8" audio out port on the pi.
 
 1. Install these packages:
 
         xorg
         chromium-browser
-        vim
-        node (v18)
+        vlc-bin
+        vlc-plugin-base
 
-2. Install bash_profile and xinitrc
+pi-clock uses VLC on the command line to play audio files.
 
-    * Copy [bash_profile](device_files/bash_profile) to `~/.bash-profile`
-    * Copy [xinitrc](device_files/xinitrc) to `~/.xinitrc`
+2. Install Node
 
-3. Install systemd service file
+You can install it via a package manager, but I'd recommend a manual 
+installation, from [NodeJS Downloads][1]. Check the [package.json][2] for what 
+version of NodeJS to use.
 
-    * Copy [pi-clock.service](device_files/pi-clock.service) to `/etc/systemd/system/pi-clock.service`
+3. Install bash_profile and xinitrc
+
+    * Copy [bash_profile][3] to `~/.bash-profile`
+    * Copy [xinitrc][4]= to `~/.xinitrc`
+
+4. Install systemd service file
+
+    * Copy [pi-clock.service][5] to `/etc/systemd/system/pi-clock.service`
     * Reload systemd:
 
             sudo systemctl daemon-reload
@@ -26,3 +48,11 @@ Alarm Clock for a Raspberry Pi Kiosk
     * Enable the service so it runs on boot:
 
             sudo systemctl enable pi-clock
+
+## Link References
+
+[1]: https://nodejs.org/en/download "NodeJS Downloads"
+[2]: package.json "package.json"
+[3]: device_files/bash_profile ".bash_profile"
+[4]: device_files/xinitrc ".xinitrc"
+[5]: device_files/pi-clock.service "pi-clock.service"
