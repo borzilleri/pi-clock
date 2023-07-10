@@ -1,6 +1,21 @@
 # pi-clock
 Alarm Clock for a Raspberry Pi Kiosk
 
+## TODO
+
+* Global disableUntilDate
+* Settings UI in admin panel
+        - set snooze duration
+        - upload/manage alarm sounds
+* Fix weird bug with DST
+        The clock does not update the displayed time when crossing a DST
+        boundary (Alarms still go off at the right time)
+* Migrate away from using camo, use nedb directly
+        camo hasn't been updated in a while, and idiotically pulls in a lot
+        of needless dependencies that aren't used, and have vulnerabilities.
+        Fucking javascript devs, amirite?
+* Improve module system, probably should be less os based and more player based.
+
 ## Features
 
 * Web UI (at `/admin`) to configure alarms.
