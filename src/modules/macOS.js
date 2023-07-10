@@ -5,7 +5,7 @@ import Module from './Module.js';
 const AUDIO_PLAYER_EXE = '/usr/bin/afplay';
 
 let currentSound;
-let audio_proc;
+let audio_proc
 
 function audioCloseHandler(err) {
 	if (err) {
@@ -18,11 +18,9 @@ function audioCloseHandler(err) {
 }
 
 function playAudioFile(fileName) {
-	let options = { stdio: 'inherit' }
 	let args = [fileName];
 	console.log("Starting Player: ", AUDIO_PLAYER_EXE, args)
-	// @ts-ignore
-	audio_proc = spawn(AUDIO_PLAYER_EXE, args, options);
+	audio_proc = spawn(AUDIO_PLAYER_EXE, args, { stdio: 'inherit' })
 	if (!audio_proc) {
 		console.error("Unable to spawn process with player: ", AUDIO_PLAYER_EXE);
 	}
