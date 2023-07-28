@@ -4,7 +4,9 @@ After=network.target
 
 [Service]
 Type=simple
+WorkingDirectory=/opt/pi-clock
 ExecStart=/path/to/node /opt/pi-clock/index.js
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
