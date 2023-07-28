@@ -43,7 +43,7 @@ body {
 
 .stop-button {
 	flex-grow: 1;
-	background-color: darkred;
+	background-color: orangered;
 	color: black;
 	text-decoration: none;
 }
@@ -61,14 +61,14 @@ body {
 	font-size: 14rem;
 	text-align: right;
 	font-family: 'DSEG7Classic';
-	color: orangered;
+	color: red;
 }
 
 #alarm {
 	width: 98%;
 	font-size: 4rem;
 	font-family: Helvetica, sans-serif;
-	color: orange;
+	color: darkred;
 }
 
 .alarm-name-only {
